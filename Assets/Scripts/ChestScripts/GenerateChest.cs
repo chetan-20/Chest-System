@@ -5,7 +5,8 @@ public class GenerateChest : MonoBehaviour
 {
     [SerializeField] private Button generateChestButton;
     [SerializeField] private Slots[] slots;
-    [SerializeField] private GameObject tempChest;
+    [SerializeField] private ChestDataSO[] chestData;
+    [SerializeField] private GameObject chestPrefab;
     private void Start()
     {
         generateChestButton.onClick.AddListener(SpawnChest);        
@@ -15,9 +16,10 @@ public class GenerateChest : MonoBehaviour
             Slots emptySlot = GetEmptySlot();
             if(emptySlot != null)
             {
-                Instantiate(tempChest, emptySlot.slotParentTransform);
-                emptySlot.slotStatus = SlotStatus.Occuipied;
-                
+                GameObject newChest=Instantiate(chestPrefab, emptySlot.slotParentTransform);
+                ChestView newChestView = newChest.GetComponent<ChestView>();
+                ChestController newChestController = new ChestController(GetRandomChestData(),newChestView);
+                emptySlot.slotStatus=SlotStatus.Occuipied;
             }
             else
             {
@@ -34,7 +36,12 @@ public class GenerateChest : MonoBehaviour
             }            
         }
         return null;
-    }  
+    }
+    private ChestDataSO GetRandomChestData()
+    {
+        int random = Random.Range(0, chestData.Length);
+        return chestData[random];
+    }
 }
 
 [System.Serializable]

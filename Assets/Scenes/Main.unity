@@ -1607,7 +1607,12 @@ MonoBehaviour:
     slotStatus: 0
   - slotParentTransform: {fileID: 771089722}
     slotStatus: 0
-  tempChest: {fileID: 248965835365994638, guid: 96e2b763400525e4e88650bad79c15ae, type: 3}
+  chestData:
+  - {fileID: 11400000, guid: ccff25573b90f674c9fccad54afdccc3, type: 2}
+  - {fileID: 11400000, guid: c1768723acc3bdc41a3e6d2fc8d0e7ca, type: 2}
+  - {fileID: 11400000, guid: cafbb7b424453d240af609cc5551e657, type: 2}
+  - {fileID: 11400000, guid: 90d0b8455328bb8418b3ac003188b074, type: 2}
+  chestPrefab: {fileID: 248965835365994638, guid: b766a376b01cae14d92a7f2413def44d, type: 3}
 --- !u!1 &1798288967
 GameObject:
   m_ObjectHideFlags: 0
