@@ -1608,7 +1608,6 @@ MonoBehaviour:
   - slotParentTransform: {fileID: 771089722}
     slotStatus: 0
   tempChest: {fileID: 248965835365994638, guid: 96e2b763400525e4e88650bad79c15ae, type: 3}
-  chestCount: 0
 --- !u!1 &1798288967
 GameObject:
   m_ObjectHideFlags: 0
