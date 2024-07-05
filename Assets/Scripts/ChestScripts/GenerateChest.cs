@@ -7,26 +7,48 @@ using UnityEngine.UI;
 public class GenerateChest : MonoBehaviour
 {
     [SerializeField] private Button generateChestButton;
-    [SerializeField] private Transform[] chestParentTransform;
+    [SerializeField] private Slots[] slots;
     [SerializeField] private GameObject tempChest;
-    [HideInInspector] public int chestCount;
     private void Start()
     {
-        generateChestButton.onClick.AddListener(SpawnChest);
-        chestCount = 0;
+        generateChestButton.onClick.AddListener(SpawnChest);        
     }
     private void SpawnChest()
-    {
-        if (chestCount < 4)
-        {
-            GameObject chest = tempChest;
-            Instantiate(chest, chestParentTransform[chestCount]);
-            chestCount++;
-        }
-        else
-        {
-            Debug.Log("Cant Spawn");
-        }
+    {        
+            Slots emptySlot = GetEmptySlot();
+            if(emptySlot != null)
+            {
+                Instantiate(tempChest, emptySlot.slotParentTransform);
+                emptySlot.slotStatus = SlotStatus.Occuipied;
+                
+            }
+            else
+            {
+                Debug.Log("SlotsFull");
+            }        
+       
     }
-   
+    private Slots GetEmptySlot()
+    {
+        foreach(Slots SLOT in slots)
+        {
+            if(SLOT.slotStatus == SlotStatus.Empty)
+            {
+                return SLOT;
+            }            
+        }
+        return null;
+    }  
+}
+
+[System.Serializable]
+public class Slots
+{
+    public Transform slotParentTransform;
+    public SlotStatus slotStatus;
+}
+public enum SlotStatus
+{
+    Empty,
+    Occuipied
 }

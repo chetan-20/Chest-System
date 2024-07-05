@@ -1598,11 +1598,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   generateChestButton: {fileID: 1790043879}
-  chestParentTransform:
-  - {fileID: 1433497656}
-  - {fileID: 1060914429}
-  - {fileID: 911963414}
-  - {fileID: 771089722}
+  slots:
+  - slotParentTransform: {fileID: 1433497656}
+    slotStatus: 0
+  - slotParentTransform: {fileID: 1060914429}
+    slotStatus: 0
+  - slotParentTransform: {fileID: 911963414}
+    slotStatus: 0
+  - slotParentTransform: {fileID: 771089722}
+    slotStatus: 0
   tempChest: {fileID: 248965835365994638, guid: 96e2b763400525e4e88650bad79c15ae, type: 3}
   chestCount: 0
 --- !u!1 &1798288967
