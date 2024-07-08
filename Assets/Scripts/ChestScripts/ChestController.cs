@@ -31,4 +31,14 @@ public class ChestController
     private void SetChestImage() => chestView.chestImage.sprite = chestData.chestSprite;
     private void SetChestRarity() => chestView.chestTypeText.text = chestData.chestType.ToString();
     private void SetChestStatus() => chestView.chestStatusText.text = ChestStates.LOCKED.ToString();
+    public string GetGemsRange()
+    {
+        return ""+chestData.gemsMinRange+"-"+chestData.gemsMaxRange;
+    }
+    public string GetCoinsRange()
+    {
+        return "" + chestData.coinsMinRange + "-" + chestData.coinsMaxRange;
+    }
+    public int GetTimeLimit() => chestData.timerInMinutes;
+    
 }

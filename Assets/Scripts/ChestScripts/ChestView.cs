@@ -8,7 +8,7 @@ public class ChestView : MonoBehaviour
     public TextMeshProUGUI chestTypeText;
     public Image chestImage;
     public TextMeshProUGUI chestStatusText;
-    private ChestController chestController;
+    public ChestController chestController;
 
     public void SetViewController(ChestController chestController)
     {
