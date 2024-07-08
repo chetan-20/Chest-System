@@ -1,5 +1,3 @@
-
-
 using UnityEngine;
 [CreateAssetMenu]
 public class ChestDataSO : ScriptableObject
