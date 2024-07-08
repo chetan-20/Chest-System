@@ -65,6 +65,7 @@ MonoBehaviour:
   chestTypeText: {fileID: 4880937596046235503}
   chestImage: {fileID: 6763595049149444590}
   chestStatusText: {fileID: 552744504853703124}
+  inputHandler: {fileID: -1603967810211187231}
 --- !u!114 &-1603967810211187231
 MonoBehaviour:
   m_ObjectHideFlags: 0

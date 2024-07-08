@@ -8,7 +8,8 @@ public class ChestView : MonoBehaviour
     public TextMeshProUGUI chestTypeText;
     public Image chestImage;
     public TextMeshProUGUI chestStatusText;
-    public ChestController chestController;
+    public InputHandler inputHandler;
+    public ChestController chestController { get; private set; }
 
     public void SetViewController(ChestController chestController)
     {
@@ -17,5 +18,13 @@ public class ChestView : MonoBehaviour
     private void Start()
     {
         chestController.SetChest();
+    }
+    private void Update()
+    {
+        if (chestController!=null && chestController.chestStateMachine!=null && 
+            chestController.chestStateMachine.CurrentState == chestController.chestStateMachine.unlockingState)
+        {
+            chestController.chestStateMachine.Update();
+        }
     }
 }

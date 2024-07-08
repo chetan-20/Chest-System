@@ -10,9 +10,11 @@ public class UIService : MonoBehaviour
     [SerializeField] private Button openWithGemButton;
     [SerializeField] private Button openForFreeButton;
     [SerializeField] private Button closeChestDataButton;
-    [SerializeField] private TextMeshProUGUI gemsToGainText;
-    [SerializeField] private TextMeshProUGUI coinsToGainText;
-    [SerializeField] private TextMeshProUGUI timeLimitText;
+    [SerializeField] private GameObject chestsMainPanel;
+    [SerializeField] public TextMeshProUGUI gemsToGainText;
+    [SerializeField] public TextMeshProUGUI coinsToGainText;
+    [SerializeField] public TextMeshProUGUI timeLimitText;
+    private ChestView currentChestView;
     private static UIService instance;
     public static UIService Instance{ get { return instance; } }
     private void Awake()
@@ -33,18 +35,34 @@ public class UIService : MonoBehaviour
     private void SetButtons()
     {
         closeChestDataButton.onClick.AddListener(OnChestTabClose);
+        openForFreeButton.onClick.AddListener(OnOpenForFreeButtonClick);
     }
-    public void OnChestClick(ChestView chestView)
+    public void OnChestClick()
     {
         generateButtonObject.SetActive(false);
-        ShowChestDataObject.SetActive(true);
-        gemsToGainText.text = chestView.chestController.GetGemsRange();
-        coinsToGainText.text = chestView.chestController.GetCoinsRange();
-        timeLimitText.text = "Time To Open "+chestView.chestController.GetChestTimer()+" Mins";
+        ShowChestDataObject.SetActive(true);        
     }
     public void OnChestTabClose()
     {
         ShowChestDataObject.SetActive(false);
         generateButtonObject.SetActive(true);
+    }
+    public void OnOpenForFreeButtonClick()
+    {
+        currentChestView.chestController.OnOpenForFree();
+        DisableAllChests();
+        OnChestTabClose();
+    }
+    public void SetCurrentChestView(ChestView chestView)
+    {
+        currentChestView = chestView;
+    }
+    private void DisableAllChests()
+    {
+        InputHandler[] inputHandlers = chestsMainPanel.GetComponentsInChildren<InputHandler>();
+        foreach(InputHandler handler in inputHandlers)
+        {
+            handler.SetClickStatus(false);
+        }
     }
 }

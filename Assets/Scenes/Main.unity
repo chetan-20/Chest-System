@@ -3030,6 +3030,7 @@ MonoBehaviour:
   openWithGemButton: {fileID: 1878751644}
   openForFreeButton: {fileID: 1095920694}
   closeChestDataButton: {fileID: 1817148759}
+  chestsMainPanel: {fileID: 1798288967}
   gemsToGainText: {fileID: 88657153}
   coinsToGainText: {fileID: 1419186910}
   timeLimitText: {fileID: 1154916700}
