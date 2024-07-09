@@ -84,6 +84,11 @@ public class ChestController
     {
         chestView.chestStatusText.text = text;
     }
+    public int CalculateOpeningWithGemCost(float remainigTime)
+    {
+        int costToOpen = Mathf.CeilToInt(remainigTime / 10);
+        return costToOpen;
+    }
     public void EnableClickingCurrentChest()
     {
         chestView.inputHandler.SetClickStatus(true);

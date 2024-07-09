@@ -9,6 +9,8 @@ public class ChestView : MonoBehaviour
     public Image chestImage;
     public TextMeshProUGUI chestStatusText;
     public InputHandler inputHandler;
+    public Button unlockAfterTimerButton;
+    public TextMeshProUGUI unlockAfterTimerText;
     public ChestController chestController { get; private set; }
 
     public void SetViewController(ChestController chestController)
@@ -18,6 +20,7 @@ public class ChestView : MonoBehaviour
     private void Start()
     {
         chestController.SetChest();
+        unlockAfterTimerButton.gameObject.SetActive(false);
     }
     private void Update()
     {

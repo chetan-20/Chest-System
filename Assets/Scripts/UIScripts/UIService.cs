@@ -82,4 +82,8 @@ public class UIService : MonoBehaviour
         playerGemsText.text = "" + playerData.playerGems;
         playerCoinText.text = "" + playerData.playerCoins;
     }
+    public void ShowUnlockWithGemsOptionOnly()
+    {
+
+    }
 }
