@@ -14,19 +14,13 @@ public class InputHandler : MonoBehaviour,IPointerClickHandler
             return;
         }
         chestView = GetComponent<ChestView>();
-        if(chestView != null)
-        {
-            UIService.Instance.OnChestClick();
-            chestView.chestController.CreateStateMachine();
-            UIService.Instance.SetCurrentChestView(chestView);
-        }
-        else
-        {
-            Debug.Log("Chest not found");
-        }
+        UIService.Instance.SetCurrentChestView(chestView);
+        UIService.Instance.OnChestClick();
+        chestView.chestController.CheckCurrentState(chestView.chestController.currentChestState);
     }
     public void SetClickStatus(bool canClick)
     {
         isClickEnabled = canClick;
     }
+   
 }

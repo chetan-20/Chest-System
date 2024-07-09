@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class UnlockingState : IChestStates
@@ -8,8 +6,10 @@ public class UnlockingState : IChestStates
     public UnlockingState(ChestController chestController) => this.chestController = chestController; 
     public void OnEnterState()
     {
+        chestController.currentChestState = ChestStates.UNLOCKING;
         Debug.Log("Entered Unlocking State");
         chestController.startTime = Time.time;
+        chestController.EnableClickingCurrentChest();       
     }
 
     public void OnExitState()

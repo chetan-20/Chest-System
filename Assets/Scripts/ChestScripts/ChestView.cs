@@ -21,8 +21,7 @@ public class ChestView : MonoBehaviour
     }
     private void Update()
     {
-        if (chestController!=null && chestController.chestStateMachine!=null && 
-            chestController.chestStateMachine.CurrentState == chestController.chestStateMachine.unlockingState)
+        if ( chestController.chestStateMachine!=null)
         {
             chestController.chestStateMachine.Update();
         }

@@ -4,6 +4,7 @@ public class ChestStateMachine
     public IChestStates CurrentState { get; private set; }
     public IChestStates lockedState;
     public IChestStates unlockingState;
+    public IChestStates unlockNotCollectedState;
     public ChestStateMachine(ChestController chestController)
     {
         CreateStates(chestController);
@@ -17,6 +18,7 @@ public class ChestStateMachine
     {
         lockedState = new LockedState(chestController);
         unlockingState = new UnlockingState(chestController);
+        unlockNotCollectedState = new UnlockNotCollected(chestController);
     }
     public void Update() => CurrentState?.Update();
     public void ChangeState(IChestStates nextState)

@@ -7,11 +7,13 @@ public class ChestController
     public ChestStateMachine chestStateMachine;
     private float currentTimeInSeconds;
     public float startTime;
+    public ChestStates currentChestState;
     public ChestController(ChestDataSO chestDataSO,ChestView chestView)
     {
         this.chestData = chestDataSO;
         this.chestView = chestView;
-        chestView.SetViewController(this);       
+        chestView.SetViewController(this);
+        currentChestState = ChestStates.NOTCREATED;
     }
     public void SetChest()
     {
@@ -24,12 +26,8 @@ public class ChestController
         if (chestStateMachine == null)
         {
             chestStateMachine = new ChestStateMachine(this);
-            Debug.Log("Created State Machine");            
-        }
-        else
-        {
-            chestStateMachine.Initialize(chestStateMachine.lockedState);
-        }
+            chestStateMachine.Initialize(chestStateMachine.lockedState);            
+        }       
     }
     public int GetRandomCoins()
     {
@@ -59,7 +57,7 @@ public class ChestController
     }
     public void OnOpenForFree()
     {        
-        chestStateMachine.ChangeState(chestStateMachine.unlockingState);
+        chestStateMachine.ChangeState(chestStateMachine.unlockingState);        
     }
     public void StartChestTimer()
     {        
@@ -72,7 +70,8 @@ public class ChestController
         }
         else
         {
-            Debug.Log("Chest Can Be Opened");
+            SetChestStatusText("UNLOCKED");
+            chestStateMachine.ChangeState(chestStateMachine.unlockNotCollectedState);           
         }
     }
     private void UpdateTimerText()
@@ -80,5 +79,33 @@ public class ChestController
         int minutes = Mathf.FloorToInt(currentTimeInSeconds / 60);
         int seconds = Mathf.FloorToInt(currentTimeInSeconds % 60);
         chestView.chestStatusText.text = minutes + " : " + seconds;
+    }
+    public void SetChestStatusText(string text)
+    {
+        chestView.chestStatusText.text = text;
+    }
+    public void EnableClickingCurrentChest()
+    {
+        chestView.inputHandler.SetClickStatus(true);
+    }
+    public void CheckCurrentState(ChestStates state)
+    {
+        switch (state)
+        {
+            case ChestStates.NOTCREATED:               
+                CreateStateMachine();
+                break;
+            case ChestStates.LOCKED:               
+                chestStateMachine.lockedState.OnEnterState();
+                break;
+            case ChestStates.UNLOCKING:
+                break;
+            case ChestStates.UNLOCKED:
+                break;
+            case ChestStates.COLLECTED:
+                break;
+            default:
+                break;
+        }
     }
 }

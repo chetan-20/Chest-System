@@ -1,4 +1,3 @@
-
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,6 +13,9 @@ public class UIService : MonoBehaviour
     [SerializeField] public TextMeshProUGUI gemsToGainText;
     [SerializeField] public TextMeshProUGUI coinsToGainText;
     [SerializeField] public TextMeshProUGUI timeLimitText;
+    [SerializeField] private TextMeshProUGUI playerGemsText;
+    [SerializeField] private TextMeshProUGUI playerCoinText;
+    private PlayerDataScript playerData;
     private ChestView currentChestView;
     private static UIService instance;
     public static UIService Instance{ get { return instance; } }
@@ -31,6 +33,8 @@ public class UIService : MonoBehaviour
     private void Start()
     {
         SetButtons();
+        playerData = new PlayerDataScript();
+        SetPlayerUI();
     }
     private void SetButtons()
     {
@@ -49,8 +53,8 @@ public class UIService : MonoBehaviour
     }
     public void OnOpenForFreeButtonClick()
     {
-        currentChestView.chestController.OnOpenForFree();
         DisableAllChests();
+        currentChestView.chestController.OnOpenForFree();        
         OnChestTabClose();
     }
     public void SetCurrentChestView(ChestView chestView)
@@ -64,5 +68,18 @@ public class UIService : MonoBehaviour
         {
             handler.SetClickStatus(false);
         }
+    }
+    public void EnableAllChests()
+    {
+        InputHandler[] inputHandlers = chestsMainPanel.GetComponentsInChildren<InputHandler>();
+        foreach (InputHandler handler in inputHandlers)
+        {
+            handler.SetClickStatus(true);
+        }
+    }
+    private void SetPlayerUI()
+    {
+        playerGemsText.text = "" + playerData.playerGems;
+        playerCoinText.text = "" + playerData.playerCoins;
     }
 }
