@@ -42,6 +42,17 @@ public class GenerateChest : MonoBehaviour
         int random = Random.Range(0, chestData.Length);
         return chestData[random];
     }
+    public void MArkSlotEmpty(Transform parentTransform)
+    {
+        foreach (Slots SLOT in slots)
+        {
+            if (SLOT.slotParentTransform == parentTransform)
+            {
+                SLOT.slotStatus = SlotStatus.Empty;
+            }
+        }
+
+    }
 }
 
 [System.Serializable]

@@ -67,8 +67,9 @@ public class ChestController
         {
             currentTimeInSeconds -= elapseTime;
             UpdateTimerText();
+            SetBuyButtonOnChest(currentTimeInSeconds);
         }
-        else
+        if(currentTimeInSeconds<=0)
         {
             SetChestStatusText("UNLOCKED");
             chestStateMachine.ChangeState(chestStateMachine.unlockNotCollectedState);           
@@ -84,7 +85,7 @@ public class ChestController
     {
         chestView.chestStatusText.text = text;
     }
-    public int CalculateOpeningWithGemCost(float remainigTime)
+    public int GetOpeningWithGemCost(float remainigTime)
     {
         int costToOpen = Mathf.CeilToInt(remainigTime / 10);
         return costToOpen;
@@ -92,6 +93,22 @@ public class ChestController
     public void EnableClickingCurrentChest()
     {
         chestView.inputHandler.SetClickStatus(true);
+    }
+    public void EnableBuyButtonOnChest(bool status)
+    {
+        chestView.unlockAfterTimerButton.gameObject.SetActive(status);       
+    }  
+    private void SetBuyButtonOnChest(float remainingTime)
+    {
+        chestView.unlockAfterTimerText.text = "OPEN NOW " + GetOpeningWithGemCost(remainingTime);
+    }
+    public void DestroyChest()
+    {
+        Object.Destroy(chestView.gameObject);
+    }
+    public Transform GetParentTransform()
+    {
+        return chestView.parentTransform;
     }
     public void CheckCurrentState(ChestStates state)
     {
@@ -106,10 +123,12 @@ public class ChestController
             case ChestStates.UNLOCKING:
                 break;
             case ChestStates.UNLOCKED:
+                chestStateMachine.ChangeState(chestStateMachine.collectedState);
                 break;
-            case ChestStates.COLLECTED:
+            case ChestStates.COLLECTED:               
                 break;
             default:
+                Debug.Log("State Missing");
                 break;
         }
     }

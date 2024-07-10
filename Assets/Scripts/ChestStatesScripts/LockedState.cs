@@ -22,7 +22,7 @@ public class LockedState : IChestStates
 
     public void Update()
     {
-        throw new System.NotImplementedException();
+       
     }
 }
 

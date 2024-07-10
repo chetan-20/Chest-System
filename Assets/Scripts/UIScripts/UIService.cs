@@ -15,6 +15,7 @@ public class UIService : MonoBehaviour
     [SerializeField] public TextMeshProUGUI timeLimitText;
     [SerializeField] private TextMeshProUGUI playerGemsText;
     [SerializeField] private TextMeshProUGUI playerCoinText;
+    [SerializeField] public GenerateChest genChest;
     private PlayerDataScript playerData;
     private ChestView currentChestView;
     private static UIService instance;
@@ -82,8 +83,10 @@ public class UIService : MonoBehaviour
         playerGemsText.text = "" + playerData.playerGems;
         playerCoinText.text = "" + playerData.playerCoins;
     }
-    public void ShowUnlockWithGemsOptionOnly()
+    public void UpdatePlayerCoinsAndGems(ChestController chestController)
     {
-
+        playerData.playerCoins += chestController.GetRandomCoins();
+        playerData.playerGems += chestController.GetRandomGems();
+        SetPlayerUI();
     }
 }

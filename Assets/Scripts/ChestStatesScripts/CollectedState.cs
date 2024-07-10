@@ -9,16 +9,21 @@ public class CollectedState : IChestStates
     }
     public void OnEnterState()
     {
-        chestController.currentChestState = ChestStates.COLLECTED;      
+        Debug.Log("Entered Collected State");
+        chestController.currentChestState = ChestStates.COLLECTED;
+        UIService.Instance.OnChestTabClose();
+        OnExitState();
     }
 
     public void OnExitState()
     {
-        throw new System.NotImplementedException();
+        UIService.Instance.genChest.MArkSlotEmpty(chestController.GetParentTransform());
+        UIService.Instance.OnChestTabClose();
+        chestController.DestroyChest();
     }
 
     public void Update()
     {
-        throw new System.NotImplementedException();
+       
     }
 }

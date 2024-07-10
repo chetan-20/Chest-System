@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public class UnlockNotCollected : IChestStates
 {
     private ChestController chestController;
@@ -9,15 +11,17 @@ public class UnlockNotCollected : IChestStates
     {
         chestController.currentChestState = ChestStates.UNLOCKED;
         UIService.Instance.EnableAllChests();
+        Debug.Log("Entered Unlock Not Collected");
+        UIService.Instance.OnChestTabClose();
     }
 
     public void OnExitState()
     {
-        throw new System.NotImplementedException();
+        UIService.Instance.UpdatePlayerCoinsAndGems(chestController);
+        UIService.Instance.OnChestTabClose();
     }
 
     public void Update()
-    {
-        throw new System.NotImplementedException();
+    {       
     }
 }
