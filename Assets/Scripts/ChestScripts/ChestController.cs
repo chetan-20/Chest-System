@@ -51,9 +51,9 @@ public class ChestController
     public int GetTimeLimit() => chestData.timerInMinutes;
     public void ShowChestData()
     {
-        UIService.Instance.gemsToGainText.text = GetGemsRange();
-        UIService.Instance.coinsToGainText.text = GetCoinsRange();
-        UIService.Instance.timeLimitText.text = "Time To Open " + GetTimeLimit() + " Mins";
+        GameService.Instance.UIService.gemsToGainText.text = GetGemsRange();
+        GameService.Instance.UIService.coinsToGainText.text = GetCoinsRange();
+        GameService.Instance.UIService.timeLimitText.text = "Time To Open " + GetTimeLimit() + " Mins";
     }
     public void OnOpenForFree()
     {        

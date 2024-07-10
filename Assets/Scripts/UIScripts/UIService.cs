@@ -15,22 +15,9 @@ public class UIService : MonoBehaviour
     [SerializeField] public TextMeshProUGUI timeLimitText;
     [SerializeField] private TextMeshProUGUI playerGemsText;
     [SerializeField] private TextMeshProUGUI playerCoinText;
-    [SerializeField] public GenerateChest genChest;
     private PlayerDataScript playerData;
     private ChestView currentChestView;
-    private static UIService instance;
-    public static UIService Instance{ get { return instance; } }
-    private void Awake()
-    {
-        if(instance == null)
-        {
-            instance = this;
-        }
-        else
-        {
-            Destroy(this.gameObject);
-        }
-    }
+    
     private void Start()
     {
         SetButtons();

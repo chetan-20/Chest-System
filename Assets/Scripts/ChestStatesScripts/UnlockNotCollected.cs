@@ -10,15 +10,15 @@ public class UnlockNotCollected : IChestStates
     public void OnEnterState()
     {
         chestController.currentChestState = ChestStates.UNLOCKED;
-        UIService.Instance.EnableAllChests();
+        GameService.Instance.UIService.EnableAllChests();
         Debug.Log("Entered Unlock Not Collected");
-        UIService.Instance.OnChestTabClose();
+        GameService.Instance.UIService.OnChestTabClose();
     }
 
     public void OnExitState()
     {
-        UIService.Instance.UpdatePlayerCoinsAndGems(chestController);
-        UIService.Instance.OnChestTabClose();
+        GameService.Instance.UIService.UpdatePlayerCoinsAndGems(chestController);
+        GameService.Instance.UIService.OnChestTabClose();
     }
 
     public void Update()

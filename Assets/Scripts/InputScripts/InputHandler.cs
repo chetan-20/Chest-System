@@ -14,8 +14,8 @@ public class InputHandler : MonoBehaviour,IPointerClickHandler
             return;
         }
         chestView = GetComponent<ChestView>();
-        UIService.Instance.SetCurrentChestView(chestView);
-        UIService.Instance.OnChestClick();
+        GameService.Instance.UIService.SetCurrentChestView(chestView);
+        GameService.Instance.UIService.OnChestClick();
         chestView.chestController.CheckCurrentState(chestView.chestController.currentChestState);
     }
     public void SetClickStatus(bool canClick)

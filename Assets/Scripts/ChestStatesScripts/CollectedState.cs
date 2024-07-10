@@ -11,14 +11,14 @@ public class CollectedState : IChestStates
     {
         Debug.Log("Entered Collected State");
         chestController.currentChestState = ChestStates.COLLECTED;
-        UIService.Instance.OnChestTabClose();
+        GameService.Instance.UIService.OnChestTabClose();
         OnExitState();
     }
 
     public void OnExitState()
     {
-        UIService.Instance.genChest.MArkSlotEmpty(chestController.GetParentTransform());
-        UIService.Instance.OnChestTabClose();
+        GameService.Instance.GenerateChest.MArkSlotEmpty(chestController.GetParentTransform());
+        GameService.Instance.UIService.OnChestTabClose();
         chestController.DestroyChest();
     }
 
