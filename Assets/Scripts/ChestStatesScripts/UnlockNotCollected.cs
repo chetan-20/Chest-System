@@ -9,6 +9,7 @@ public class UnlockNotCollected : IChestStates
     }
     public void OnEnterState()
     {
+        chestController.SetChestStatusText("UNLOCKED");
         chestController.currentChestState = ChestStates.UNLOCKED;
         GameService.Instance.UIService.EnableAllChests();
         Debug.Log("Entered Unlock Not Collected");

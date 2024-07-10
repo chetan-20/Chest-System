@@ -51,6 +51,7 @@ public class ChestController
     public int GetTimeLimit() => chestData.timerInMinutes;
     public void ShowChestData()
     {
+        GameService.Instance.UIService.OnChestClick();
         GameService.Instance.UIService.gemsToGainText.text = GetGemsRange();
         GameService.Instance.UIService.coinsToGainText.text = GetCoinsRange();
         GameService.Instance.UIService.timeLimitText.text = "Time To Open " + GetTimeLimit() + " Mins";
@@ -67,11 +68,10 @@ public class ChestController
         {
             currentTimeInSeconds -= elapseTime;
             UpdateTimerText();
-            SetBuyButtonOnChest(currentTimeInSeconds);
+            SetBuyButtonTextOnChest(currentTimeInSeconds);
         }
         if(currentTimeInSeconds<=0)
-        {
-            SetChestStatusText("UNLOCKED");
+        {          
             chestStateMachine.ChangeState(chestStateMachine.unlockNotCollectedState);           
         }
     }
@@ -98,7 +98,7 @@ public class ChestController
     {
         chestView.unlockAfterTimerButton.gameObject.SetActive(status);       
     }  
-    private void SetBuyButtonOnChest(float remainingTime)
+    private void SetBuyButtonTextOnChest(float remainingTime)
     {
         chestView.unlockAfterTimerText.text = "OPEN NOW " + GetOpeningWithGemCost(remainingTime);
     }
@@ -120,7 +120,7 @@ public class ChestController
             case ChestStates.LOCKED:               
                 chestStateMachine.lockedState.OnEnterState();
                 break;
-            case ChestStates.UNLOCKING:
+            case ChestStates.UNLOCKING:                
                 break;
             case ChestStates.UNLOCKED:
                 chestStateMachine.ChangeState(chestStateMachine.collectedState);
@@ -131,5 +131,28 @@ public class ChestController
                 Debug.Log("State Missing");
                 break;
         }
+    }
+    public void SetBuyButtonOnChest()
+    {
+        int openingCost = GetOpeningWithGemCost(currentTimeInSeconds);
+        int playerGems = GameService.Instance.UIService.playerData.playerGems;
+        if (playerGems >= openingCost)
+        {
+            OnSuccesfullBuyWithGems();
+            GameService.Instance.UIService.playerData.playerGems -= openingCost;
+            GameService.Instance.UIService.SetPlayerUI();
+        }
+        if(playerGems< openingCost)
+        {
+            GameService.Instance.PopUpService.DisplayPopUp("NOT ENOUGH GEMS");
+        }
+    }
+    public void OnSuccesfullBuyWithGems()
+    {        
+        chestStateMachine.ChangeState(chestStateMachine.unlockNotCollectedState);
+    }
+    public int GetTotalChestTime()
+    {
+        return chestData.timerInMinutes;
     }
 }

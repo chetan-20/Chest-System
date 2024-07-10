@@ -15,7 +15,8 @@ public class UIService : MonoBehaviour
     [SerializeField] public TextMeshProUGUI timeLimitText;
     [SerializeField] private TextMeshProUGUI playerGemsText;
     [SerializeField] private TextMeshProUGUI playerCoinText;
-    private PlayerDataScript playerData;
+    [SerializeField] private TextMeshProUGUI buyWithGemsText;
+    public PlayerDataScript playerData;
     private ChestView currentChestView;
     
     private void Start()
@@ -27,7 +28,7 @@ public class UIService : MonoBehaviour
     private void SetButtons()
     {
         closeChestDataButton.onClick.AddListener(OnChestTabClose);
-        openForFreeButton.onClick.AddListener(OnOpenForFreeButtonClick);
+        openForFreeButton.onClick.AddListener(OnOpenForFreeButtonClick);      
     }
     public void OnChestClick()
     {
@@ -65,7 +66,7 @@ public class UIService : MonoBehaviour
             handler.SetClickStatus(true);
         }
     }
-    private void SetPlayerUI()
+    public void SetPlayerUI()
     {
         playerGemsText.text = "" + playerData.playerGems;
         playerCoinText.text = "" + playerData.playerCoins;
@@ -78,5 +79,5 @@ public class UIService : MonoBehaviour
         playerData.playerCoins += randomCoins;
         playerData.playerGems += randomGems;
         SetPlayerUI();
-    }
+    }   
 }

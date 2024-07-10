@@ -23,6 +23,7 @@ public class ChestView : MonoBehaviour
         chestController.SetChest();
         unlockAfterTimerButton.gameObject.SetActive(false);
         parentTransform = transform.parent;
+        unlockAfterTimerButton.onClick.AddListener(chestController.SetBuyButtonOnChest);
     }
     private void Update()
     {

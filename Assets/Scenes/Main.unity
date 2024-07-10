@@ -3223,6 +3223,7 @@ MonoBehaviour:
   timeLimitText: {fileID: 1154916700}
   playerGemsText: {fileID: 746899593}
   playerCoinText: {fileID: 211693016}
+  buyWithGemsText: {fileID: 2128321327}
 --- !u!1 &1871380311
 GameObject:
   m_ObjectHideFlags: 0
