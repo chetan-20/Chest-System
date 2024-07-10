@@ -23,7 +23,7 @@ public class GenerateChest : MonoBehaviour
             }
             else
             {
-                Debug.Log("SlotsFull");
+            GameService.Instance.PopUpService.DisplayPopUp("SLOTS FULL");
             }           
     }
     private Slots GetEmptySlot()

@@ -72,8 +72,11 @@ public class UIService : MonoBehaviour
     }
     public void UpdatePlayerCoinsAndGems(ChestController chestController)
     {
-        playerData.playerCoins += chestController.GetRandomCoins();
-        playerData.playerGems += chestController.GetRandomGems();
+        int randomCoins = chestController.GetRandomCoins();
+        int randomGems = chestController.GetRandomGems();
+        GameService.Instance.PopUpService.DisplayPopUp("+"+randomGems + " Gems"+" +"+randomCoins+" Coins");
+        playerData.playerCoins += randomCoins;
+        playerData.playerGems += randomGems;
         SetPlayerUI();
     }
 }
