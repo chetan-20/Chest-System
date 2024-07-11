@@ -20,15 +20,15 @@ public class GenerateChest : MonoBehaviour
                 ChestView newChestView = newChest.GetComponent<ChestView>();
                 ChestController newChestController = new ChestController(GetRandomChestData(),newChestView);            
                 emptySlot.slotStatus=SlotStatus.Occuipied;
-                if (GameService.Instance.UIService.istimerActive == true)
-                    {
+                if(GameService.Instance.UIService.istimerActive == true)
+                   {
                         newChestController.DisableClickingCurrentChest();
-                    }
+                   }
             }
             else
-            {
-            GameService.Instance.PopUpService.DisplayPopUp("SLOTS FULL");
-            }           
+                {
+                    GameService.Instance.PopUpService.DisplayPopUp("SLOTS FULL");
+                }           
     }
     private Slots GetEmptySlot()
     {

@@ -20,6 +20,5 @@ public class InputHandler : MonoBehaviour,IPointerClickHandler
     public void SetClickStatus(bool canClick)
     {
         isClickEnabled = canClick;
-    }
-   
+    }   
 }
