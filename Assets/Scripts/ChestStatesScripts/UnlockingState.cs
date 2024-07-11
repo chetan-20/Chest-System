@@ -9,7 +9,6 @@ public class UnlockingState : IChestStates
         chestController.currentChestState = ChestStates.UNLOCKING;
         Debug.Log("Entered Unlocking State");
         chestController.startTime = Time.time;
-        //chestController.EnableClickingCurrentChest();
         chestController.EnableBuyButtonOnChest(true);
     }
 
