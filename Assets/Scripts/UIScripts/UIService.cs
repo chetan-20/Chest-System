@@ -54,19 +54,7 @@ public class UIService : MonoBehaviour
         currentChestView = chestView;
     }
     private void DisableLockedChests()
-    {
-        /*InputHandler[] inputHandlers = chestsMainPanel.GetComponentsInChildren<InputHandler>();
-        foreach(InputHandler handler in inputHandlers)
-        {
-            if (chestState == ChestStates.LOCKED || chestState==ChestStates.NOTCREATED)
-            {
-                handler.SetClickStatus(false);
-            }
-            else
-            {
-                handler.SetClickStatus(true);
-            }
-        }*/
+    {       
         ChestView[] chestView = chestsMainPanel.GetComponentsInChildren<ChestView>();
         foreach (ChestView chest in chestView)
         {
@@ -82,10 +70,10 @@ public class UIService : MonoBehaviour
     }
     public void EnableAllChests()
     {
-        InputHandler[] inputHandlers = chestsMainPanel.GetComponentsInChildren<InputHandler>();
-        foreach (InputHandler handler in inputHandlers)
-        {
-            handler.SetClickStatus(true);
+        ChestView[] chestView = chestsMainPanel.GetComponentsInChildren<ChestView>();
+        foreach (ChestView chest in chestView)
+        {            
+            chest.chestController.EnableClickingCurrentChest();           
         }
     }
     public void SetPlayerUI()
