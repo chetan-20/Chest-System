@@ -24,10 +24,10 @@ public class UIService : MonoBehaviour
     
     private void Start()
     {
-        SetButtons();
-        SetPlayerUI();
+        SetButtons();        
         istimerActive = false;
         playerData = new PlayerDataScript();
+        SetPlayerUI();
     }
     private void SetButtons()
     {
