@@ -52,6 +52,14 @@ public class UIService : MonoBehaviour
     public void SetCurrentChestView(ChestView chestView)
     {
         currentChestView = chestView;
+        if (currentChestView.chestController.currentChestState == ChestStates.LOCKED|| currentChestView.chestController.currentChestState == ChestStates.NOTCREATED)
+        {
+            openWithGemButton.onClick.RemoveAllListeners();
+            openWithGemButton.onClick.AddListener(() => {
+                SetInstantBuyButton();
+                openWithGemButton.onClick.RemoveAllListeners(); 
+            });
+        }
     }
     private void DisableLockedChests()
     {       
@@ -89,5 +97,13 @@ public class UIService : MonoBehaviour
         playerData.playerCoins += randomCoins;
         playerData.playerGems += randomGems;
         SetPlayerUI();
-    }   
+    }
+    public void SetInstantBuyWithGemsText(int cost)
+    {
+        buyWithGemsText.text = "Buy Now For " + cost;
+    }
+    public void SetInstantBuyButton()
+    {
+        currentChestView.chestController.InstantBuy();
+    }
 }

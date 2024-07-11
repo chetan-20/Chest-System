@@ -55,6 +55,7 @@ public class ChestController
         GameService.Instance.UIService.gemsToGainText.text = GetGemsRange();
         GameService.Instance.UIService.coinsToGainText.text = GetCoinsRange();
         GameService.Instance.UIService.timeLimitText.text = "Time To Open " + GetTimeLimit() + " Mins";
+        GameService.Instance.UIService.SetInstantBuyWithGemsText(GetOpeningWithGemCost(chestData.timerInMinutes*60));
     }
     public void OnOpenForFree()
     {        
@@ -152,20 +153,34 @@ public class ChestController
         int playerGems = GameService.Instance.UIService.playerData.playerGems;
         if (playerGems >= openingCost)
         {
-            OnSuccesfullBuyWithGems();
-            GameService.Instance.UIService.playerData.playerGems -= openingCost;
-            GameService.Instance.UIService.SetPlayerUI();
+            OnSuccesfullBuyWithGems(openingCost);                      
         }
-        if(playerGems< openingCost)
+        else 
         {
             GameService.Instance.PopUpService.DisplayPopUp("NOT ENOUGH GEMS");
         }
     }
-    public void OnSuccesfullBuyWithGems()
-    {        
-        chestStateMachine.ChangeState(chestStateMachine.unlockNotCollectedState);
+    public void OnSuccesfullBuyWithGems(int openingCost)
+    {  
+        GameService.Instance.UIService.playerData.playerGems -= openingCost;
+        GameService.Instance.UIService.SetPlayerUI();       
+        chestStateMachine.ChangeState(chestStateMachine.unlockNotCollectedState);       
     }
-    public int GetTotalChestTime()
+    public void InstantBuy()
+    {
+        int openingCost = GetOpeningWithGemCost(getTotalTime()*60);
+        Debug.Log(openingCost);
+        if (GameService.Instance.UIService.playerData.playerGems >= openingCost)
+        {
+            OnSuccesfullBuyWithGems(openingCost);
+        }
+        else
+        {
+            GameService.Instance.PopUpService.DisplayPopUp("NOT ENOUGH GEMS");
+        }
+        
+    }
+    private int getTotalTime()
     {
         return chestData.timerInMinutes;
     }
