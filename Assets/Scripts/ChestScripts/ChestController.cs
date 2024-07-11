@@ -76,18 +76,7 @@ public class ChestController
         }
     }
     private void UpdateTimerText()
-    {
-        /*int hours = Mathf.FloorToInt(currentTimeInSeconds / 3600);
-        int minutes = Mathf.FloorToInt(currentTimeInSeconds / 60);
-        int seconds = Mathf.FloorToInt(currentTimeInSeconds % 60);
-        if (hours < 1)
-        {
-            chestView.chestStatusText.text = minutes + " : " + seconds;
-        }
-        else
-        {
-            chestView.chestStatusText.text = hours+" : "+minutes + " : " + seconds;
-        }*/
+    {       
         int hours = Mathf.FloorToInt(currentTimeInSeconds / 3600);
         int remainingSeconds = Mathf.FloorToInt(currentTimeInSeconds % 3600);
         int minutes = Mathf.FloorToInt(remainingSeconds / 60);
