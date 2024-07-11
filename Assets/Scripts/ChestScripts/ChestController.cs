@@ -77,9 +77,30 @@ public class ChestController
     }
     private void UpdateTimerText()
     {
+        /*int hours = Mathf.FloorToInt(currentTimeInSeconds / 3600);
         int minutes = Mathf.FloorToInt(currentTimeInSeconds / 60);
         int seconds = Mathf.FloorToInt(currentTimeInSeconds % 60);
-        chestView.chestStatusText.text = minutes + " : " + seconds;
+        if (hours < 1)
+        {
+            chestView.chestStatusText.text = minutes + " : " + seconds;
+        }
+        else
+        {
+            chestView.chestStatusText.text = hours+" : "+minutes + " : " + seconds;
+        }*/
+        int hours = Mathf.FloorToInt(currentTimeInSeconds / 3600);
+        int remainingSeconds = Mathf.FloorToInt(currentTimeInSeconds % 3600);
+        int minutes = Mathf.FloorToInt(remainingSeconds / 60);
+        int seconds = Mathf.FloorToInt(remainingSeconds % 60);
+
+        if (hours > 0)
+        {
+            chestView.chestStatusText.text = hours + " : " + minutes.ToString("00") + " : " + seconds.ToString("00");
+        }
+        else
+        {
+            chestView.chestStatusText.text = minutes + " : " + seconds.ToString("00");
+        }
     }
     public void SetChestStatusText(string text)
     {
@@ -87,7 +108,7 @@ public class ChestController
     }
     public int GetOpeningWithGemCost(float remainigTime)
     {
-        int costToOpen = Mathf.CeilToInt(remainigTime / 10);
+        int costToOpen = Mathf.CeilToInt((remainigTime/60) / 10);
         return costToOpen;
     }
     public void EnableClickingCurrentChest()

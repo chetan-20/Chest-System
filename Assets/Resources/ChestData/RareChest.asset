@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chestType: 1
   chestSprite: {fileID: 21300000, guid: 8bdb4582bcee7b045b8858d4b6dda97d, type: 3}
-  timerInMinutes: 1
+  timerInMinutes: 30
   coinsMinRange: 300
   coinsMaxRange: 400
   gemsMinRange: 20
