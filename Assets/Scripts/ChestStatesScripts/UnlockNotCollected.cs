@@ -14,6 +14,7 @@ public class UnlockNotCollected : IChestStates
         GameService.Instance.UIService.EnableAllChests();
         Debug.Log("Entered Unlock Not Collected");
         GameService.Instance.UIService.OnChestTabClose();
+        GameService.Instance.UIService.istimerActive = false;
     }
 
     public void OnExitState()

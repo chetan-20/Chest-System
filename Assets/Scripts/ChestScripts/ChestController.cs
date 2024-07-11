@@ -94,6 +94,10 @@ public class ChestController
     {
         chestView.inputHandler.SetClickStatus(true);
     }
+    public void DisableClickingCurrentChest()
+    {
+        chestView.inputHandler.SetClickStatus(false);
+    }
     public void EnableBuyButtonOnChest(bool status)
     {
         chestView.unlockAfterTimerButton.gameObject.SetActive(status);       

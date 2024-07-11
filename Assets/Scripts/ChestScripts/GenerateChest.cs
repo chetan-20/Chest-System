@@ -18,8 +18,12 @@ public class GenerateChest : MonoBehaviour
             {
                 GameObject newChest=Instantiate(chestPrefab, emptySlot.slotParentTransform);
                 ChestView newChestView = newChest.GetComponent<ChestView>();
-                ChestController newChestController = new ChestController(GetRandomChestData(),newChestView);
+                ChestController newChestController = new ChestController(GetRandomChestData(),newChestView);            
                 emptySlot.slotStatus=SlotStatus.Occuipied;
+                if (GameService.Instance.UIService.istimerActive == true)
+                    {
+                        newChestController.DisableClickingCurrentChest();
+                    }
             }
             else
             {

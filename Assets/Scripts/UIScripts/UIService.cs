@@ -15,7 +15,8 @@ public class UIService : MonoBehaviour
     [SerializeField] public TextMeshProUGUI timeLimitText;
     [SerializeField] private TextMeshProUGUI playerGemsText;
     [SerializeField] private TextMeshProUGUI playerCoinText;
-    [SerializeField] private TextMeshProUGUI buyWithGemsText;
+    [SerializeField] private TextMeshProUGUI buyWithGemsText;    
+    public bool istimerActive;
     public PlayerDataScript playerData;
     private ChestView currentChestView;
     
@@ -24,6 +25,7 @@ public class UIService : MonoBehaviour
         SetButtons();
         playerData = new PlayerDataScript();
         SetPlayerUI();
+        istimerActive = false;
     }
     private void SetButtons()
     {
@@ -42,20 +44,40 @@ public class UIService : MonoBehaviour
     }
     public void OnOpenForFreeButtonClick()
     {
-        DisableAllChests();
+        DisableLockedChests();
         currentChestView.chestController.OnOpenForFree();        
         OnChestTabClose();
+        istimerActive = true;
     }
     public void SetCurrentChestView(ChestView chestView)
     {
         currentChestView = chestView;
     }
-    private void DisableAllChests()
+    private void DisableLockedChests()
     {
-        InputHandler[] inputHandlers = chestsMainPanel.GetComponentsInChildren<InputHandler>();
+        /*InputHandler[] inputHandlers = chestsMainPanel.GetComponentsInChildren<InputHandler>();
         foreach(InputHandler handler in inputHandlers)
         {
-            handler.SetClickStatus(false);
+            if (chestState == ChestStates.LOCKED || chestState==ChestStates.NOTCREATED)
+            {
+                handler.SetClickStatus(false);
+            }
+            else
+            {
+                handler.SetClickStatus(true);
+            }
+        }*/
+        ChestView[] chestView = chestsMainPanel.GetComponentsInChildren<ChestView>();
+        foreach (ChestView chest in chestView)
+        {
+            if (chest.chestController.currentChestState == ChestStates.NOTCREATED || chest.chestController.currentChestState == ChestStates.LOCKED)
+            {
+                chest.chestController.DisableClickingCurrentChest();
+            }
+            else
+            {
+                chest.chestController.EnableClickingCurrentChest();
+            }
         }
     }
     public void EnableAllChests()
