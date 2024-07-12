@@ -14,9 +14,8 @@ public class PopUpService : MonoBehaviour
     public void DisplayPopUp(string msg)
     {
         popUpPanel.SetActive(true);
-        popUpMsgText.text = msg;
-        StartCoroutine(DisableAfterDealy());
-       
+        popUpMsgText.text = msg;       
+        StartCoroutine(DisableAfterDealy());      
     }
     private IEnumerator DisableAfterDealy()
     {              

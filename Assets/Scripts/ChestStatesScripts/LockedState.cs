@@ -11,8 +11,10 @@ public class LockedState : IChestStates
     public void OnEnterState()
     {
         chestController.currentChestState = ChestStates.LOCKED;
-        chestController.ShowChestData();      
+        chestController.ShowChestData();
+        chestController.SetChestStatusText();      
         Debug.Log("Entered Locked State");
+        chestController.undoPressed = false;
     }
 
     public void OnExitState()

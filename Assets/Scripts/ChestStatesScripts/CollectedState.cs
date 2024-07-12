@@ -9,8 +9,14 @@ public class CollectedState : IChestStates
     }
     public void OnEnterState()
     {
+        if(chestController.undoPressed)
+        {
+            GameService.Instance.UIService.EnableAllChests();
+            return;
+        }
         Debug.Log("Entered Collected State");
         chestController.currentChestState = ChestStates.COLLECTED;
+        GameService.Instance.UIService.UpdatePlayerCoinsAndGems(chestController);
         GameService.Instance.UIService.OnChestTabClose();
         OnExitState();
     }

@@ -12,6 +12,7 @@ public class ChestView : MonoBehaviour
     public Button unlockAfterTimerButton;
     public TextMeshProUGUI unlockAfterTimerText;
     public Transform parentTransform;
+    public Button undoChestButton;
     public ChestController chestController { get; private set; }
 
     public void SetViewController(ChestController chestController)
@@ -21,9 +22,11 @@ public class ChestView : MonoBehaviour
     private void Start()
     {
         chestController.SetChest();
-        unlockAfterTimerButton.gameObject.SetActive(false);
-        parentTransform = transform.parent;
+        chestController.EnableBuyButtonOnChest(false);
+        chestController.EnableUndoButton(false);
         unlockAfterTimerButton.onClick.AddListener(chestController.SetBuyButtonOnChest);
+        undoChestButton.onClick.AddListener(chestController.UndoChestState);
+        parentTransform = transform.parent;            
     }
     private void Update()
     {
