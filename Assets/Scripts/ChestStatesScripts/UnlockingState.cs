@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class UnlockingState : IChestStates
 {
-    private ChestController chestController;
-    public UnlockingState(ChestController chestController) => this.chestController = chestController; 
-    public void OnEnterState()
+    
+    public UnlockingState(ChestController chestController) : base(chestController) { } 
+    public override void OnEnterState()
     {
         chestController.currentChestState = ChestStates.UNLOCKING;
         Debug.Log("Entered Unlocking State");
@@ -12,12 +12,12 @@ public class UnlockingState : IChestStates
         chestController.EnableBuyButtonOnChest(true);
     }
 
-    public void OnExitState()
+    public override void OnExitState()
     {
         chestController.EnableBuyButtonOnChest(false);
     }
 
-    public void Update()
+    public override void Update()
     {
         chestController.StartChestTimer();
     }

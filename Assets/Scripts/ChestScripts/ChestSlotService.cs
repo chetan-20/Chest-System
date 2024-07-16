@@ -1,12 +1,12 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GenerateChest : MonoBehaviour
+public class ChestSlotService : MonoBehaviour
 {
     [SerializeField] private Button generateChestButton;
     [SerializeField] private Slots[] slots;
     [SerializeField] private ChestDataSO[] chestData;
-    [SerializeField] private GameObject chestPrefab;
+    [SerializeField] private ChestView chestPrefab;
     private void Start()
     {
         generateChestButton.onClick.AddListener(SpawnChest);        
@@ -16,9 +16,8 @@ public class GenerateChest : MonoBehaviour
             Slots emptySlot = GetEmptySlot();
             if(emptySlot != null)
             {
-                GameObject newChest=Instantiate(chestPrefab, emptySlot.slotParentTransform);
-                ChestView newChestView = newChest.GetComponent<ChestView>();
-                ChestController newChestController = new ChestController(GetRandomChestData(),newChestView);            
+                ChestView newChestView=Instantiate(chestPrefab, emptySlot.slotParentTransform);                
+                ChestController newChestController = new(GetRandomChestData(),newChestView);            
                 emptySlot.slotStatus=SlotStatus.Occuipied;
                 if(GameService.Instance.UIService.istimerActive == true)
                    {

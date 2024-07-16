@@ -2,13 +2,9 @@ using UnityEngine;
 
 public class LockedState : IChestStates
 {
-    private ChestController chestController;  
-    public LockedState(ChestController chestController) 
-    { 
-        this.chestController = chestController;       
-    }
+    public LockedState(ChestController chestController) : base(chestController) { }      
 
-    public void OnEnterState()
+    public override void OnEnterState()
     {
         chestController.currentChestState = ChestStates.LOCKED;
         chestController.ShowChestData();
@@ -17,12 +13,12 @@ public class LockedState : IChestStates
         chestController.undoPressed = false;
     }
 
-    public void OnExitState()
+    public override void OnExitState()
     {
        
     }
 
-    public void Update()
+    public override void Update()
     {
        
     }

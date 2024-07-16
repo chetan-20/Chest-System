@@ -1,17 +1,16 @@
 using UnityEngine;
 
 public class CollectedState : IChestStates
-{
-    private ChestController chestController;
-    public CollectedState(ChestController chestController)
+{    
+    public CollectedState(ChestController chestController) : base(chestController)
     {
         this.chestController = chestController;
     }
-    public void OnEnterState()
+    public override void OnEnterState()
     {
         if(chestController.undoPressed)
         {
-            GameService.Instance.UIService.EnableAllChests();
+            GameService.Instance.ChestEnablerScript.EnableAllChests();
             return;
         }
         Debug.Log("Entered Collected State");
@@ -20,15 +19,14 @@ public class CollectedState : IChestStates
         GameService.Instance.UIService.OnChestTabClose();
         OnExitState();
     }
-
-    public void OnExitState()
+    public override void OnExitState()
     {
         GameService.Instance.GenerateChest.MArkSlotEmpty(chestController.GetParentTransform());
         GameService.Instance.UIService.OnChestTabClose();
         chestController.DestroyChest();
     }
 
-    public void Update()
+    public override void Update()
     {
        
     }

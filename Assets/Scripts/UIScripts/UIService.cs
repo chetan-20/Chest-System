@@ -9,8 +9,7 @@ public class UIService : MonoBehaviour
     [SerializeField] private GameObject ShowChestDataObject;
     [SerializeField] private Button openWithGemButton;
     [SerializeField] private Button openForFreeButton;
-    [SerializeField] private Button closeChestDataButton;
-    [SerializeField] private GameObject chestsMainPanel;
+    [SerializeField] private Button closeChestDataButton;    
     [SerializeField] public TextMeshProUGUI gemsToGainText;
     [SerializeField] public TextMeshProUGUI coinsToGainText;
     [SerializeField] public TextMeshProUGUI timeLimitText;
@@ -46,8 +45,8 @@ public class UIService : MonoBehaviour
     }
     public void OnOpenForFreeButtonClick()
     {
-        DisableLockedChests();
-        currentChestView.chestController.OnOpenForFree();        
+        GameService.Instance.ChestEnablerScript.DisableLockedChests();
+        currentChestView.ChestController.OnOpenForFree();        
         OnChestTabClose();
         istimerActive = true;
     }
@@ -58,7 +57,7 @@ public class UIService : MonoBehaviour
     }
     private void SetInstantBuyButton()
     {
-        if (currentChestView.chestController.currentChestState == ChestStates.LOCKED || currentChestView.chestController.currentChestState == ChestStates.NOTCREATED)
+        if (currentChestView.ChestController.currentChestState == ChestStates.LOCKED || currentChestView.ChestController.currentChestState == ChestStates.NOTCREATED)
         {
             openWithGemButton.onClick.RemoveAllListeners();
             openWithGemButton.onClick.AddListener(() => {
@@ -67,29 +66,7 @@ public class UIService : MonoBehaviour
             });
         }
     }
-    private void DisableLockedChests()
-    {       
-        ChestView[] chestView = chestsMainPanel.GetComponentsInChildren<ChestView>();
-        foreach (ChestView chest in chestView)
-        {
-            if (chest.chestController.currentChestState == ChestStates.NOTCREATED || chest.chestController.currentChestState == ChestStates.LOCKED)
-            {
-                chest.chestController.DisableClickingCurrentChest();
-            }
-            else
-            {
-                chest.chestController.EnableClickingCurrentChest();
-            }
-        }
-    }
-    public void EnableAllChests()
-    {
-        ChestView[] chestView = chestsMainPanel.GetComponentsInChildren<ChestView>();
-        foreach (ChestView chest in chestView)
-        {            
-            chest.chestController.EnableClickingCurrentChest();           
-        }
-    }
+   
     public void SetPlayerUI()
     {
         playerGemsText.text = playerData.playerGems.ToString();
@@ -105,6 +82,6 @@ public class UIService : MonoBehaviour
         SetPlayerUI();
     }
     public void SetInstantBuyWithGemsText(int cost) => buyWithGemsText.text = "Buy Now For " + cost;   
-    private void InstantBuyButton() => currentChestView.chestController.InstantBuy();
+    private void InstantBuyButton() => currentChestView.ChestController.InstantBuy();
     
 }

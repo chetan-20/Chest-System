@@ -4,16 +4,18 @@ using UnityEngine.UI;
 
 public class ChestView : MonoBehaviour
 {
-    public ChestView chestViewPrefab;
-    public TextMeshProUGUI chestTypeText;
-    public Image chestImage;
-    public TextMeshProUGUI chestStatusText;
-    public InputHandler inputHandler;
-    public Button unlockAfterTimerButton;
-    public TextMeshProUGUI unlockAfterTimerText;
+    [SerializeField] public ChestView chestViewPrefab;
+    [SerializeField] public TextMeshProUGUI chestTypeText;
+    [SerializeField] public Image chestImage;
+    [SerializeField] public TextMeshProUGUI chestStatusText;   
+    [SerializeField] public Button unlockAfterTimerButton;
+    [SerializeField] public TextMeshProUGUI unlockAfterTimerText;    
+    [SerializeField] public Button undoChestButton;
+    [SerializeField] public Button chestDetailButton;
     public Transform parentTransform;
-    public Button undoChestButton;
-    public ChestController chestController { get; private set; }
+    private ChestController chestController;
+    public ChestController ChestController {  get { return chestController; } }
+    
 
     public void SetViewController(ChestController chestController)
     {
@@ -25,6 +27,7 @@ public class ChestView : MonoBehaviour
         chestController.EnableBuyButtonOnChest(false);
         chestController.EnableUndoButton(false);
         unlockAfterTimerButton.onClick.AddListener(chestController.SetBuyButtonOnChest);
+        chestDetailButton.onClick.AddListener(chestController.ChestCliked);
         undoChestButton.onClick.AddListener(chestController.UndoChestState);
         parentTransform = transform.parent;            
     }

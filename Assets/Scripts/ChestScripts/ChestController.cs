@@ -5,7 +5,7 @@ public class ChestController
     private ChestDataSO chestData;
     private ChestView chestView;
     public ChestStateMachine chestStateMachine;
-    private float currentTimeInSeconds;
+    public float currentTimeInSeconds;
     public float startTime;
     public ChestStates currentChestState;
     public bool undoPressed;
@@ -26,8 +26,8 @@ public class ChestController
     private void SetChestRarity() => chestView.chestTypeText.text = chestData.chestType.ToString();
     public void SetChestStatusText() => chestView.chestStatusText.text = "LOCKED"; 
     public int GetTimeLimit() => chestData.timerInMinutes;
-    public void EnableClickingCurrentChest() => chestView.inputHandler.SetClickStatus(true);
-    public void DisableClickingCurrentChest() => chestView.inputHandler.SetClickStatus(false);
+    public void EnableClickingCurrentChest() => chestView.chestDetailButton.gameObject.SetActive(true);
+    public void DisableClickingCurrentChest() => chestView.chestDetailButton.gameObject.SetActive(false);
     public void EnableBuyButtonOnChest(bool status) => chestView.unlockAfterTimerButton.gameObject.SetActive(status);
     private void SetBuyButtonTextOnChest(float remainingTime) => chestView.unlockAfterTimerText.text = "OPEN NOW " + GetOpeningWithGemCost(remainingTime);
     public void DestroyChest() => Object.Destroy(chestView.gameObject);
@@ -73,8 +73,7 @@ public class ChestController
         }       
     }
     public void ShowChestData()
-    {
-        GameService.Instance.UIService.OnChestClick();
+    {      
         GameService.Instance.UIService.gemsToGainText.text = GetGemsRange();
         GameService.Instance.UIService.coinsToGainText.text = GetCoinsRange();
         GameService.Instance.UIService.timeLimitText.text = "Time To Open " + GetTimeLimit() + " Mins";
@@ -175,5 +174,14 @@ public class ChestController
         chestStateMachine.ChangeState(chestStateMachine.lockedState);
         EnableUndoButton(false);
         GameService.Instance.UIService.OnChestTabClose();           
+    }
+    public void ChestCliked()
+    {
+        GameService.Instance.UIService.OnChestClick();
+        ShowChestData();
+    }
+    public ChestStates GetCurrentState()
+    {
+        return currentChestState;
     }
 }
