@@ -6,22 +6,14 @@ public class LockedState : IChestStates
 
     public override void OnEnterState()
     {
-        chestController.currentChestState = ChestStates.LOCKED;
+        chestController.SetCurrentChestState(ChestStates.LOCKED);
         chestController.ShowChestData();
-        chestController.SetChestStatusText();      
+        chestController.SetChestStatusText("LOCKED");             
+        chestController.SetUndoStatus(false);
         Debug.Log("Entered Locked State");
-        chestController.undoPressed = false;
     }
-
-    public override void OnExitState()
-    {
-       
-    }
-
-    public override void Update()
-    {
-       
-    }
+    public override void OnExitState() { }  
+    public override void Update() { }    
 }
 
 

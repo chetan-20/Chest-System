@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GameService : MonoBehaviour
@@ -8,6 +6,7 @@ public class GameService : MonoBehaviour
     [SerializeField] private ChestSlotService genChest;
     [SerializeField] private PopUpService popUpService;
     [SerializeField] private ChestEnablerScript chestEnabler;
+    private bool istimerActive;
     private static GameService instance;
 
     public static GameService Instance { get{ return instance; } }
@@ -27,6 +26,10 @@ public class GameService : MonoBehaviour
             Destroy(instance);
         }
     }
+    private void Start()
+    {
+        istimerActive = false;
+    }
     private void Update()
     {
         OnEscapePress();
@@ -37,5 +40,13 @@ public class GameService : MonoBehaviour
         {
             Application.Quit();
         }
+    }
+    public void SetTimerStatus(bool status)
+    {
+        istimerActive = status;
+    }
+    public bool GetTimerStatus()
+    {
+        return istimerActive;
     }
 }

@@ -8,13 +8,13 @@ public class CollectedState : IChestStates
     }
     public override void OnEnterState()
     {
-        if(chestController.undoPressed)
+        if(chestController.GetUndoStatus())
         {
             GameService.Instance.ChestEnablerScript.EnableAllChests();
             return;
         }
         Debug.Log("Entered Collected State");
-        chestController.currentChestState = ChestStates.COLLECTED;
+        chestController.SetCurrentChestState(ChestStates.COLLECTED);
         GameService.Instance.UIService.UpdatePlayerCoinsAndGems(chestController);
         GameService.Instance.UIService.OnChestTabClose();
         OnExitState();

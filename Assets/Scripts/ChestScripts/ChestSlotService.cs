@@ -19,7 +19,7 @@ public class ChestSlotService : MonoBehaviour
                 ChestView newChestView=Instantiate(chestPrefab, emptySlot.slotParentTransform);                
                 ChestController newChestController = new(GetRandomChestData(),newChestView);            
                 emptySlot.slotStatus=SlotStatus.Occuipied;
-                if(GameService.Instance.UIService.istimerActive == true)
+                if(GameService.Instance.GetTimerStatus())
                    {
                         newChestController.DisableClickingCurrentChest();
                    }

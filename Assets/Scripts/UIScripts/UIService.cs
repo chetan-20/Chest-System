@@ -1,4 +1,3 @@
-using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -16,15 +15,13 @@ public class UIService : MonoBehaviour
     [SerializeField] private TextMeshProUGUI playerGemsText;
     [SerializeField] private TextMeshProUGUI playerCoinText;
     [SerializeField] private TextMeshProUGUI buyWithGemsText;
-    
-    public bool istimerActive;
+       
     public PlayerDataScript playerData;
     private ChestView currentChestView;
     
     private void Start()
     {
-        SetButtons();        
-        istimerActive = false;
+        SetButtons();               
         playerData = new PlayerDataScript();
         SetPlayerUI();
     }
@@ -48,7 +45,7 @@ public class UIService : MonoBehaviour
         GameService.Instance.ChestEnablerScript.DisableLockedChests();
         currentChestView.ChestController.OnOpenForFree();        
         OnChestTabClose();
-        istimerActive = true;
+        GameService.Instance.SetTimerStatus(true);
     }
     public void SetCurrentChestView(ChestView chestView)
     {
@@ -57,7 +54,7 @@ public class UIService : MonoBehaviour
     }
     private void SetInstantBuyButton()
     {
-        if (currentChestView.ChestController.currentChestState == ChestStates.LOCKED || currentChestView.ChestController.currentChestState == ChestStates.NOTCREATED)
+        if (currentChestView.ChestController.GetCurrentState() == ChestStates.LOCKED || currentChestView.ChestController.GetCurrentState() == ChestStates.NOTCREATED)
         {
             openWithGemButton.onClick.RemoveAllListeners();
             openWithGemButton.onClick.AddListener(() => {

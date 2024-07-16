@@ -7,20 +7,15 @@ public class UnlockNotCollected : IChestStates
     public override void OnEnterState()
     {
         chestController.SetChestStatusText("UNLOCKED");
-        chestController.currentChestState = ChestStates.UNLOCKED;
-        GameService.Instance.ChestEnablerScript.EnableAllChests();
-        Debug.Log("Entered Unlock Not Collected");
+        chestController.SetCurrentChestState(ChestStates.UNLOCKED);
+        GameService.Instance.ChestEnablerScript.EnableAllChests();        
         GameService.Instance.UIService.OnChestTabClose();
-        GameService.Instance.UIService.istimerActive = false;       
+        GameService.Instance.SetTimerStatus(false);
+        Debug.Log("Entered Unlock Not Collected");       
     }
-
-    public  override    void OnExitState()
-    {
-       
-        GameService.Instance.UIService.OnChestTabClose();
-    }
-
-    public override void Update()
+    public override void OnExitState()
     {       
+        GameService.Instance.UIService.OnChestTabClose();
     }
+    public override void Update() { }   
 }

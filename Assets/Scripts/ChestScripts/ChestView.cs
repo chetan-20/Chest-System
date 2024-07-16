@@ -16,26 +16,31 @@ public class ChestView : MonoBehaviour
     private ChestController chestController;
     public ChestController ChestController {  get { return chestController; } }
     
-
     public void SetViewController(ChestController chestController)
     {
         this.chestController = chestController;
     }
     private void Start()
     {
-        chestController.SetChest();
-        chestController.EnableBuyButtonOnChest(false);
-        chestController.EnableUndoButton(false);
-        unlockAfterTimerButton.onClick.AddListener(chestController.SetBuyButtonOnChest);
-        chestDetailButton.onClick.AddListener(chestController.ChestCliked);
-        undoChestButton.onClick.AddListener(chestController.UndoChestState);
-        parentTransform = transform.parent;            
+        chestController.SetChest();       
+        parentTransform = transform.parent;
+        SetButon();
+        DisableButtons();
     }
     private void Update()
-    {
-        if ( chestController.chestStateMachine!=null)
-        {
-            chestController.chestStateMachine.Update();
-        }
+    {        
+        chestController.Update();        
     }
+    private void SetButon()
+    {
+        unlockAfterTimerButton.onClick.AddListener(chestController.SetBuyButtonOnChest);
+        chestDetailButton.onClick.AddListener(chestController.ChestClicked);
+        undoChestButton.onClick.AddListener(chestController.UndoChestState);
+    }
+    private void DisableButtons()
+    {
+        chestController.EnableBuyButtonOnChest(false);
+        chestController.EnableUndoButton(false);
+    }
+    
 }
