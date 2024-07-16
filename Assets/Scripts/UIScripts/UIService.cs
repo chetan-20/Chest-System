@@ -14,15 +14,12 @@ public class UIService : MonoBehaviour
     [SerializeField] public TextMeshProUGUI timeLimitText;
     [SerializeField] private TextMeshProUGUI playerGemsText;
     [SerializeField] private TextMeshProUGUI playerCoinText;
-    [SerializeField] private TextMeshProUGUI buyWithGemsText;
-       
-    public PlayerDataScript playerData;
+    [SerializeField] private TextMeshProUGUI buyWithGemsText;          
     private ChestView currentChestView;
     
     private void Start()
     {
-        SetButtons();               
-        playerData = new PlayerDataScript();
+        SetButtons();                      
         SetPlayerUI();
     }
     private void SetButtons()
@@ -53,31 +50,19 @@ public class UIService : MonoBehaviour
         SetInstantBuyButton();
     }
     private void SetInstantBuyButton()
-    {
-        if (currentChestView.ChestController.GetCurrentState() == ChestStates.LOCKED || currentChestView.ChestController.GetCurrentState() == ChestStates.NOTCREATED)
+    {       
+        openWithGemButton.onClick.RemoveAllListeners();
+        openWithGemButton.onClick.AddListener(() => 
         {
+            InstantBuyButton();
             openWithGemButton.onClick.RemoveAllListeners();
-            openWithGemButton.onClick.AddListener(() => {
-                InstantBuyButton();
-                openWithGemButton.onClick.RemoveAllListeners();
-            });
-        }
-    }
-   
+        });        
+    }   
     public void SetPlayerUI()
     {
-        playerGemsText.text = playerData.playerGems.ToString();
-        playerCoinText.text = playerData.playerCoins.ToString();
-    }
-    public void UpdatePlayerCoinsAndGems(ChestController chestController)
-    {
-        int randomCoins = chestController.GetRandomCoins();
-        int randomGems = chestController.GetRandomGems();
-        GameService.Instance.PopUpService.DisplayPopUp("+"+randomGems + " Gems"+" +"+randomCoins+" Coins");
-        playerData.playerCoins += randomCoins;
-        playerData.playerGems += randomGems;
-        SetPlayerUI();
-    }
+        playerGemsText.text = GameService.Instance.playerData.GetPlayerGems().ToString();
+        playerCoinText.text = GameService.Instance.playerData.GetPlayerCoins().ToString();
+    }   
     public void SetInstantBuyWithGemsText(int cost) => buyWithGemsText.text = "Buy Now For " + cost;   
     private void InstantBuyButton() => currentChestView.ChestController.InstantBuy();
     

@@ -15,7 +15,7 @@ public class CollectedState : IChestStates
         }
         Debug.Log("Entered Collected State");
         chestController.SetCurrentChestState(ChestStates.COLLECTED);
-        GameService.Instance.UIService.UpdatePlayerCoinsAndGems(chestController);
+        chestController.UpdatePlayerCoinsAndGems();
         GameService.Instance.UIService.OnChestTabClose();
         OnExitState();
     }

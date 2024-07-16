@@ -16,8 +16,9 @@ public class ChestSlotService : MonoBehaviour
             Slots emptySlot = GetEmptySlot();
             if(emptySlot != null)
             {
-                ChestView newChestView=Instantiate(chestPrefab, emptySlot.slotParentTransform);                
-                ChestController newChestController = new(GetRandomChestData(),newChestView);            
+                ChestView newChestView=Instantiate(chestPrefab, emptySlot.slotParentTransform); 
+                ChestDataSO randomChestData = GetRandomChestData();
+                ChestController newChestController = new(randomChestData,newChestView);            
                 emptySlot.slotStatus=SlotStatus.Occuipied;
                 if(GameService.Instance.GetTimerStatus())
                    {
@@ -43,7 +44,7 @@ public class ChestSlotService : MonoBehaviour
     private ChestDataSO GetRandomChestData()
     {
         int random = Random.Range(0, chestData.Length);
-        return chestData[random];
+        return Instantiate(chestData[random]);
     }
     public void MArkSlotEmpty(Transform parentTransform)
     {

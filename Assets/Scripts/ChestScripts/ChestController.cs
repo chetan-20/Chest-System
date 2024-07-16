@@ -137,7 +137,7 @@ public class ChestController
     public void SetBuyButtonOnChest()
     {
         int openingCost = GetOpeningWithGemCost(chestData.currentTimeInSeconds);
-        int playerGems = GameService.Instance.UIService.playerData.playerGems;
+        int playerGems = GameService.Instance.playerData.GetPlayerGems();
         if (playerGems >= openingCost)
         {
             OnSuccesfullBuyWithGems(openingCost);                      
@@ -150,14 +150,14 @@ public class ChestController
     public void OnSuccesfullBuyWithGems(int openingCost)
     {
         EnableUndoButton(true);
-        GameService.Instance.UIService.playerData.playerGems -= openingCost;
+        GameService.Instance.playerData.RemoveGems(openingCost);
         GameService.Instance.UIService.SetPlayerUI();       
         chestStateMachine.ChangeState(chestStateMachine.unlockNotCollectedState);        
     }
     public void InstantBuy()
     {
         int openingCost = GetInstantOpeningCost();      
-        if (GameService.Instance.UIService.playerData.playerGems >= openingCost)
+        if (GameService.Instance.playerData.GetPlayerGems() >= openingCost)
         {
             OnSuccesfullBuyWithGems(openingCost);
         }
@@ -171,7 +171,7 @@ public class ChestController
     {
         int openingCost = GetInstantOpeningCost();
         SetUndoStatus(true);
-        GameService.Instance.UIService.playerData.playerGems += openingCost;
+        GameService.Instance.playerData.AddGems(openingCost);
         GameService.Instance.UIService.SetPlayerUI();
         chestStateMachine.ChangeState(chestStateMachine.lockedState);
         EnableUndoButton(false);
@@ -202,5 +202,14 @@ public class ChestController
     public void SetStartTime()
     {
         chestData.startTime = Time.time;
+    }
+    public void UpdatePlayerCoinsAndGems()
+    {
+        int randomCoins = GetRandomCoins();
+        int randomGems = GetRandomGems();
+        GameService.Instance.PopUpService.DisplayPopUp("+" + randomGems + " Gems" + " +" + randomCoins + " Coins");
+        GameService.Instance.playerData.AddCoins(randomCoins);
+        GameService.Instance.playerData.AddGems(randomGems);
+        GameService.Instance.UIService.SetPlayerUI();
     }
 }

@@ -6,6 +6,7 @@ public class GameService : MonoBehaviour
     [SerializeField] private ChestSlotService genChest;
     [SerializeField] private PopUpService popUpService;
     [SerializeField] private ChestEnablerScript chestEnabler;
+    public PlayerData playerData;
     private bool istimerActive;
     private static GameService instance;
 
@@ -24,11 +25,12 @@ public class GameService : MonoBehaviour
         else
         {
             Destroy(instance);
-        }
+        } 
+        playerData = new PlayerData();
     }
     private void Start()
     {
-        istimerActive = false;
+        istimerActive = false;      
     }
     private void Update()
     {
