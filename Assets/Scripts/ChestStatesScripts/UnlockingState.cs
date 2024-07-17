@@ -16,6 +16,6 @@ public class UnlockingState : IChestStates
     }
     public override void Update()
     {
-        chestController.StartChestTimer();
+        chestController.StartTimer();
     }
 }   

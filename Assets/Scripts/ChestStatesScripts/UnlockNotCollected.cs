@@ -1,5 +1,4 @@
 using UnityEngine;
-
 public class UnlockNotCollected : IChestStates
 {    
     public UnlockNotCollected(ChestController chestController) : base(chestController) { }

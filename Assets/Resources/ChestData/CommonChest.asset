@@ -19,3 +19,7 @@ MonoBehaviour:
   coinsMaxRange: 200
   gemsMinRange: 10
   gemsMaxRange: 20
+  currentTimeInSeconds: 0
+  startTime: 0
+  currentChestState: 0
+  undoPressed: 0

@@ -1,4 +1,3 @@
-
 public class ChestStateMachine 
 {
     private IChestStates CurrentState;

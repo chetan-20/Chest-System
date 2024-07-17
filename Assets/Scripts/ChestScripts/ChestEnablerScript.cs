@@ -1,5 +1,4 @@
 using UnityEngine;
-
 public class ChestEnablerScript : MonoBehaviour
 {
     [SerializeField] private GameObject chestsMainPanel;

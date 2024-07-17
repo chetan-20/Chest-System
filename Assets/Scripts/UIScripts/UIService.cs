@@ -1,7 +1,6 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-
 public class UIService : MonoBehaviour
 {
     [SerializeField] private GameObject generateButtonObject;

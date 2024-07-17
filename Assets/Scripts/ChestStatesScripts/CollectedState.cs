@@ -1,5 +1,4 @@
 using UnityEngine;
-
 public class CollectedState : IChestStates
 {    
     public CollectedState(ChestController chestController) : base(chestController)

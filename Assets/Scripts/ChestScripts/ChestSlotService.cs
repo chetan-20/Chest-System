@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.UI;
-
 public class ChestSlotService : MonoBehaviour
 {
     [SerializeField] private Button generateChestButton;

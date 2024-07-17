@@ -1,7 +1,6 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-
 public class ChestView : MonoBehaviour
 {
     [SerializeField] public ChestView chestViewPrefab;
@@ -21,8 +20,7 @@ public class ChestView : MonoBehaviour
         this.chestController = chestController;
     }
     private void Start()
-    {
-        chestController.SetChest();       
+    {              
         parentTransform = transform.parent;
         SetButon();
         DisableButtons();
