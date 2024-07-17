@@ -39,6 +39,5 @@ public class ChestView : MonoBehaviour
     {
         chestController.EnableBuyButtonOnChest(false);
         chestController.EnableUndoButton(false);
-    }
-    
+    }    
 }

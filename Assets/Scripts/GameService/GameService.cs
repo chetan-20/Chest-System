@@ -27,6 +27,7 @@ public class GameService : MonoBehaviour
             Destroy(instance);
         } 
         playerData = new PlayerData();
+        chestEnabler = new ChestEnablerScript();
     }
     private void Start()
     {

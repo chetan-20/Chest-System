@@ -1,10 +1,8 @@
-using UnityEngine;
-public class ChestEnablerScript : MonoBehaviour
-{
-    [SerializeField] private GameObject chestsMainPanel;
-    public void DisableLockedChests()
-    {
-        ChestView[] chestView = chestsMainPanel.GetComponentsInChildren<ChestView>();
+using System.Collections.Generic;
+public class ChestEnablerScript
+{  
+    public void DisableLockedChests(List<ChestView> chestView)
+    {       
         foreach (ChestView chest in chestView)
         {
             if (chest.ChestController.GetCurrentState() == ChestStates.LOCKED)
@@ -17,9 +15,8 @@ public class ChestEnablerScript : MonoBehaviour
             }
         }
     }
-    public void EnableAllChests()
-    {
-        ChestView[] chestView = chestsMainPanel.GetComponentsInChildren<ChestView>();
+    public void EnableAllChests(List<ChestView> chestView)
+    {         
         foreach (ChestView chest in chestView)
         {
             chest.ChestController.EnableClickingCurrentChest();

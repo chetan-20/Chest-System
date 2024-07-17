@@ -9,7 +9,7 @@ public class CollectedState : IChestStates
     {
         if(chestController.GetUndoStatus())
         {
-            GameService.Instance.ChestEnablerScript.EnableAllChests();
+            GameService.Instance.ChestEnablerScript.EnableAllChests(GameService.Instance.ChestSlotService.GetChestViewList());
             return;
         }
         Debug.Log("Entered Collected State");
@@ -19,8 +19,7 @@ public class CollectedState : IChestStates
         OnExitState();
     }
     public override void OnExitState()
-    {
-        GameService.Instance.ChestSlotService.MarkSlotEmpty(chestController.GetParentTransform());
+    {       
         GameService.Instance.UIService.OnChestTabClose();
         chestController.DestroyChest();
     }
