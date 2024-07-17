@@ -10,8 +10,9 @@ public class ChestController
     {
         this.chestData = chestDataSO;
         this.chestView = chestView;
-        chestView.SetViewController(this);
-        chestData.currentChestState = ChestStates.NOTCREATED;      
+        chestView.SetViewController(this);       
+        chestStateMachine = new ChestStateMachine(this);
+        chestStateMachine.Initialize(chestStateMachine.lockedState);
     }
     public void SetChest()
     {
@@ -33,7 +34,11 @@ public class ChestController
     public void EnableBuyButtonOnChest(bool status) => chestView.unlockAfterTimerButton.gameObject.SetActive(status);
     private void SetBuyButtonTextOnChest(float remainingTime) => chestView.unlockAfterTimerText.text = "OPEN NOW " + GetOpeningWithGemCost(remainingTime);
     public void DestroyChest() => Object.Destroy(chestView.gameObject);
-    public void OnOpenForFree() => chestStateMachine.ChangeState(chestStateMachine.unlockingState);
+    public void OnOpenForFree()
+    {
+        GameService.Instance.ChestEnablerScript.DisableLockedChests();
+        chestStateMachine.ChangeState(chestStateMachine.unlockingState);
+    }
     public void SetChestStatusText(string text) => chestView.chestStatusText.text = text;
     public void EnableUndoButton(bool status)=> chestView.undoChestButton.gameObject.SetActive(status);
 
@@ -65,20 +70,12 @@ public class ChestController
     private int GetInstantOpeningCost()
     {
         return GetOpeningWithGemCost(GetTimeLimit() * 60);
-    }
-   public void CreateStateMachine()
-    {
-        if (chestStateMachine == null)
-        {
-            chestStateMachine = new ChestStateMachine(this);
-            chestStateMachine.Initialize(chestStateMachine.lockedState);            
-        }       
-    }
+    }   
     public void ShowChestData()
     {      
-        GameService.Instance.UIService.gemsToGainText.text = GetGemsRange();
-        GameService.Instance.UIService.coinsToGainText.text = GetCoinsRange();
-        GameService.Instance.UIService.timeLimitText.text = "Time To Open " + GetTimeLimit() + " Mins";
+        GameService.Instance.UIService.SetGemsToGainText(GetGemsRange());
+        GameService.Instance.UIService.SetCoinsToGainText(GetCoinsRange());
+        GameService.Instance.UIService.SetTimeLimitText("Time To Open " + GetTimeLimit() + " Mins");
         GameService.Instance.UIService.SetInstantBuyWithGemsText(GetOpeningWithGemCost(chestData.timerInMinutes*60));
     }       
     public void StartChestTimer()
@@ -112,28 +109,7 @@ public class ChestController
             chestView.chestStatusText.text = minutes + " : " + seconds.ToString("00");
         }
     }                  
-    public void CheckCurrentState(ChestStates state)
-    {       
-        switch (state)
-        {
-            case ChestStates.NOTCREATED:               
-                CreateStateMachine();
-                break;
-            case ChestStates.LOCKED:               
-                chestStateMachine.lockedState.OnEnterState();
-                break;
-            case ChestStates.UNLOCKING:                
-                break;
-            case ChestStates.UNLOCKED:
-                chestStateMachine.ChangeState(chestStateMachine.collectedState);
-                break;
-            case ChestStates.COLLECTED:               
-                break;
-            default:
-                Debug.Log("State Missing");
-                break;
-        }
-    }
+   
     public void SetBuyButtonOnChest()
     {
         int openingCost = GetOpeningWithGemCost(chestData.currentTimeInSeconds);
@@ -181,7 +157,7 @@ public class ChestController
     {
         GameService.Instance.UIService.OnChestClick();        
         GameService.Instance.UIService.SetCurrentChestView(chestView);
-        CheckCurrentState(chestData.currentChestState);
+        chestStateMachine.CheckCurrentState(chestData.currentChestState);
     }
     public ChestStates GetCurrentState()
     {

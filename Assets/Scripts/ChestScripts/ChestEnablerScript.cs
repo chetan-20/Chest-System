@@ -8,7 +8,7 @@ public class ChestEnablerScript : MonoBehaviour
         ChestView[] chestView = chestsMainPanel.GetComponentsInChildren<ChestView>();
         foreach (ChestView chest in chestView)
         {
-            if (chest.ChestController.GetCurrentState() == ChestStates.NOTCREATED || chest.ChestController.GetCurrentState() == ChestStates.LOCKED)
+            if (chest.ChestController.GetCurrentState() == ChestStates.LOCKED)
             {
                 chest.ChestController.DisableClickingCurrentChest();
             }

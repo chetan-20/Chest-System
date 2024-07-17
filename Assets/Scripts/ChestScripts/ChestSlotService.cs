@@ -46,7 +46,7 @@ public class ChestSlotService : MonoBehaviour
         int random = Random.Range(0, chestData.Length);
         return Instantiate(chestData[random]);
     }
-    public void MArkSlotEmpty(Transform parentTransform)
+    public void MarkSlotEmpty(Transform parentTransform)
     {
         foreach (Slots SLOT in slots)
         {

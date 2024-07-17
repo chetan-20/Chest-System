@@ -1,11 +1,11 @@
 
 public class ChestStateMachine 
 {
-    public IChestStates CurrentState { get; private set; }
-    public IChestStates lockedState;
-    public IChestStates unlockingState;
-    public IChestStates unlockNotCollectedState;
-    public IChestStates collectedState;
+    private IChestStates CurrentState;
+    public IChestStates lockedState { get; private set; }
+    public IChestStates unlockingState { get; private set; }
+    public IChestStates unlockNotCollectedState { get; private set; }
+    public IChestStates collectedState { get; private set; }
     public ChestStateMachine(ChestController chestController)
     {
         CreateStates(chestController);
@@ -28,5 +28,23 @@ public class ChestStateMachine
         CurrentState?.OnExitState();
         CurrentState = nextState;
         CurrentState?.OnEnterState();
+    }
+    public void CheckCurrentState(ChestStates state)
+    {
+        switch (state)
+        {            
+            case ChestStates.LOCKED:
+                lockedState.OnEnterState();
+                break;
+            case ChestStates.UNLOCKING:
+                break;
+            case ChestStates.UNLOCKED:
+                ChangeState(collectedState);
+                break;
+            case ChestStates.COLLECTED:
+                break;
+            default:              
+                break;
+        }
     }
 }

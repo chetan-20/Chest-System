@@ -21,7 +21,7 @@ public class CollectedState : IChestStates
     }
     public override void OnExitState()
     {
-        GameService.Instance.GenerateChest.MArkSlotEmpty(chestController.GetParentTransform());
+        GameService.Instance.ChestSlotService.MarkSlotEmpty(chestController.GetParentTransform());
         GameService.Instance.UIService.OnChestTabClose();
         chestController.DestroyChest();
     }

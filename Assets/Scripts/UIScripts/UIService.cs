@@ -9,9 +9,9 @@ public class UIService : MonoBehaviour
     [SerializeField] private Button openWithGemButton;
     [SerializeField] private Button openForFreeButton;
     [SerializeField] private Button closeChestDataButton;    
-    [SerializeField] public TextMeshProUGUI gemsToGainText;
-    [SerializeField] public TextMeshProUGUI coinsToGainText;
-    [SerializeField] public TextMeshProUGUI timeLimitText;
+    [SerializeField] private TextMeshProUGUI gemsToGainText;
+    [SerializeField] private TextMeshProUGUI coinsToGainText;
+    [SerializeField] private TextMeshProUGUI timeLimitText;
     [SerializeField] private TextMeshProUGUI playerGemsText;
     [SerializeField] private TextMeshProUGUI playerCoinText;
     [SerializeField] private TextMeshProUGUI buyWithGemsText;          
@@ -38,8 +38,7 @@ public class UIService : MonoBehaviour
         generateButtonObject.SetActive(true);
     }
     public void OnOpenForFreeButtonClick()
-    {
-        GameService.Instance.ChestEnablerScript.DisableLockedChests();
+    {        
         currentChestView.ChestController.OnOpenForFree();        
         OnChestTabClose();
         GameService.Instance.SetTimerStatus(true);
@@ -65,5 +64,8 @@ public class UIService : MonoBehaviour
     }   
     public void SetInstantBuyWithGemsText(int cost) => buyWithGemsText.text = "Buy Now For " + cost;   
     private void InstantBuyButton() => currentChestView.ChestController.InstantBuy();
-    
+    public void SetGemsToGainText(string text) => gemsToGainText.text = text;
+    public void SetCoinsToGainText(string text) => coinsToGainText.text = text;
+    public void SetTimeLimitText(string text) => timeLimitText.text = text;
+
 }

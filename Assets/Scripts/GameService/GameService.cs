@@ -12,7 +12,7 @@ public class GameService : MonoBehaviour
 
     public static GameService Instance { get{ return instance; } }
     public UIService UIService { get{ return uiService; } }
-    public ChestSlotService GenerateChest { get { return genChest; } }
+    public ChestSlotService ChestSlotService { get { return genChest; } }
     public PopUpService PopUpService { get { return popUpService; } }
     public ChestEnablerScript ChestEnablerScript { get { return chestEnabler; } }
 
