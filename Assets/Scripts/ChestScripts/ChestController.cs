@@ -16,7 +16,7 @@ public class ChestController
         chestView.SetViewController(this);
         chestStateMachine = new ChestStateMachine(this);
         chestValueCalculator = new ChestValueCalculator(this);      
-        chestUIUpdater = new ChestUIUpdater(this.chestView, chestData, chestValueCalculator);        
+        chestUIUpdater = new ChestUIUpdater(this.chestView,this);        
         SetChest();
         chestStateMachine.Initialize(chestStateMachine.lockedState);
     }
