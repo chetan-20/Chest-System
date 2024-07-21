@@ -8,9 +8,7 @@ public class ChestDataSO : ScriptableObject
     public int coinsMinRange;
     public int coinsMaxRange;
     public int gemsMinRange;
-    public int gemsMaxRange;
-    public float currentTimeInSeconds;
-    public float startTime;
+    public int gemsMaxRange;      
     public ChestStates currentChestState;
     public bool undoPressed;
 }

@@ -34,14 +34,10 @@ public class ChestStateMachine
         {            
             case ChestStates.LOCKED:
                 lockedState.OnEnterState();
-                break;
-            case ChestStates.UNLOCKING:
-                break;
+                break;          
             case ChestStates.UNLOCKED:
                 ChangeState(collectedState);
-                break;
-            case ChestStates.COLLECTED:
-                break;
+                break;          
             default:              
                 break;
         }

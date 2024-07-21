@@ -1,46 +1,48 @@
+using TMPro;
 using UnityEngine;
 public class ChestTimer 
 {
-    private ChestDataSO chestData;
-    private ChestStateMachine chestStateMachine;
-    private ChestView chestView;
-    
-    public ChestTimer(ChestDataSO chestData, ChestStateMachine chestStateMachine,ChestView chestView)
+    private ChestController chestController;    
+    public float currentTimeInSeconds { get; private set; }
+    private float startTime;
+    public ChestTimer(ChestController chestController)
     {
-        this.chestData = chestData;
-        this.chestStateMachine = chestStateMachine;
-        this.chestView = chestView;
+        this.chestController = chestController;      
     }    
-    public void StartTimer()
-    {
-        float elapseTime = Time.time - chestData.startTime;
-        chestData.currentTimeInSeconds = chestData.timerInMinutes * 60;
-        if (chestData.currentTimeInSeconds > 0)
+    public void StartTimer(TextMeshProUGUI chestStatusText,TextMeshProUGUI unlockOnChestText)
+    {        
+        float elapseTime = Time.time - startTime;
+        currentTimeInSeconds = chestController.chestData.timerInMinutes * 60;
+        if (currentTimeInSeconds > 0)
         {
-            chestData.currentTimeInSeconds -= elapseTime;
-            UpdateTimerText();
-            SetBuyButtonTextOnChest(chestData.currentTimeInSeconds);
+           currentTimeInSeconds -= elapseTime;
+            UpdateTimerText(chestStatusText);
+            SetBuyButtonTextOnChest(currentTimeInSeconds,unlockOnChestText);
         }
-        if (chestData.currentTimeInSeconds <= 0)
+        if (currentTimeInSeconds <= 0)
         {
-            chestStateMachine.ChangeState(chestStateMachine.unlockNotCollectedState);
+            chestController.SetCurrentChestState(ChestStates.UNLOCKED);
         }
     }
-    private void UpdateTimerText()
+    public void SetStartTime()
     {
-        int hours = Mathf.FloorToInt(chestData.currentTimeInSeconds / 3600);
-        int remainingSeconds = Mathf.FloorToInt(chestData.currentTimeInSeconds % 3600);
+        startTime = Time.time;
+    }
+    private void UpdateTimerText(TextMeshProUGUI text)
+    {
+        int hours = Mathf.FloorToInt(currentTimeInSeconds / 3600);
+        int remainingSeconds = Mathf.FloorToInt(currentTimeInSeconds % 3600);
         int minutes = Mathf.FloorToInt(remainingSeconds / 60);
         int seconds = Mathf.FloorToInt(remainingSeconds % 60);
 
         if (hours > 0)
         {
-            chestView.chestStatusText.text = hours + " : " + minutes.ToString("00") + " : " + seconds.ToString("00");
+           text.text = hours + " : " + minutes.ToString("00") + " : " + seconds.ToString("00");
         }
         else
         {
-            chestView.chestStatusText.text = minutes + " : " + seconds.ToString("00");
+           text.text = minutes + " : " + seconds.ToString("00");
         }
     }
-    private void SetBuyButtonTextOnChest(float remainingTime) => chestView.unlockAfterTimerText.text = "OPEN NOW " + new ChestValueCalculator(chestData).GetOpeningWithGemCost(remainingTime);
+    private void SetBuyButtonTextOnChest(float remainingTime,TextMeshProUGUI text) => text.text = "OPEN NOW " + new ChestValueCalculator(chestController).GetOpeningWithGemCost(remainingTime);
 }

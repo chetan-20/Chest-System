@@ -1,18 +1,18 @@
 using UnityEngine;
 public class ChestValueCalculator 
 {
-    private ChestDataSO chestData;
+    private ChestController chestController;
 
-    public ChestValueCalculator(ChestDataSO chestData)
+    public ChestValueCalculator(ChestController chestController)
     {
-        this.chestData = chestData;
+        this.chestController = chestController;
     }
     public int GetOpeningWithGemCost(float remainingTime)
     {
         return Mathf.CeilToInt((remainingTime / 60) / 10);
     }
-    public int GetInstantOpeningCost() => GetOpeningWithGemCost(chestData.timerInMinutes * 60);
-    public int GetRandomCoins() => Random.Range(chestData.coinsMinRange, chestData.coinsMaxRange);
-    public int GetRandomGems() => Random.Range(chestData.gemsMinRange, chestData.gemsMaxRange);
+    public int GetInstantOpeningCost() => GetOpeningWithGemCost(chestController.chestData.timerInMinutes * 60);
+    public int GetRandomCoins() => Random.Range(chestController.chestData.coinsMinRange, chestController.chestData.coinsMaxRange);
+    public int GetRandomGems() => Random.Range(chestController.chestData.gemsMinRange, chestController.chestData.gemsMaxRange);
     public int GetOpeningCost(float remainingTime )=> Mathf.CeilToInt((remainingTime / 60) / 10);    
 }

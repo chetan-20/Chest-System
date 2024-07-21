@@ -11,7 +11,7 @@ public class ChestView : MonoBehaviour
     [SerializeField] public TextMeshProUGUI unlockAfterTimerText;    
     [SerializeField] public Button undoChestButton;
     [SerializeField] public Button chestDetailButton;
-    public Transform parentTransform;
+    private Transform parentTransform;
     private ChestController chestController;
     public ChestController ChestController {  get { return chestController; } }
     
@@ -30,14 +30,17 @@ public class ChestView : MonoBehaviour
         chestController.Update();        
     }
     private void SetButon()
-    {
-        unlockAfterTimerButton.onClick.AddListener(chestController.SetBuyButtonOnChest);
+    {        
         chestDetailButton.onClick.AddListener(chestController.ChestClicked);
-        undoChestButton.onClick.AddListener(chestController.UndoChestState);
+        undoChestButton.onClick.AddListener(chestController.UndoChestState);       
     }
     private void DisableButtons()
     {
         chestController.EnableBuyButtonOnChest(false);
         chestController.EnableUndoButton(false);
-    }    
+    }
+    public Transform GetParentTransform()
+    {
+        return parentTransform;
+    }
 }

@@ -27,4 +27,16 @@ public class PlayerData
     {
         playerGems -= amount;
     }
+    public void InstantBuy(int openingCost,ChestController chestController)
+    {      
+        if (GetPlayerGems() >= openingCost)
+        {
+            chestController.OnSuccesfullBuyWithGems(openingCost);
+        }
+        else
+        {
+            GameService.Instance.PopUpService.DisplayPopUp("NOT ENOUGH GEMS");
+        }
+
+    }
 }

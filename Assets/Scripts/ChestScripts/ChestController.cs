@@ -1,42 +1,40 @@
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ChestController 
 {
-    private ChestDataSO chestData;
+    public ChestDataSO chestData { get; private set; }
     private ChestView chestView;
     private ChestStateMachine chestStateMachine;
-    private ChestUIUpdater chestUIUpdater;
-    private ChestTimer chestTimer;
-    private ChestValueCalculator chestValueCalculator;
-
+    private ChestUIUpdater chestUIUpdater;  
+    public ChestValueCalculator chestValueCalculator {get; private set;}
     public ChestController(ChestDataSO chestDataSO, ChestView chestView)
     {
         this.chestData = chestDataSO;
         this.chestView = chestView;
         chestView.SetViewController(this);
         chestStateMachine = new ChestStateMachine(this);
-        chestValueCalculator = new ChestValueCalculator(chestData);
-        chestTimer = new ChestTimer(chestData, chestStateMachine,this.chestView);
+        chestValueCalculator = new ChestValueCalculator(this);      
         chestUIUpdater = new ChestUIUpdater(this.chestView, chestData, chestValueCalculator);        
         SetChest();
         chestStateMachine.Initialize(chestStateMachine.lockedState);
     }
     
-    public void Update() => chestStateMachine?.Update();        
-    public void StartTimer()=>chestTimer.StartTimer();    
+    public void Update() => chestStateMachine?.Update();             
     public void EnableClickingCurrentChest() => chestView.chestDetailButton.gameObject.SetActive(true);
     public void DisableClickingCurrentChest() => chestView.chestDetailButton.gameObject.SetActive(false);
     public void EnableBuyButtonOnChest(bool status) => chestView.unlockAfterTimerButton.gameObject.SetActive(status);           
-    public void EnableUndoButton(bool status) => chestView.undoChestButton.gameObject.SetActive(status);
-    public Transform GetParentTransform() => chestView.parentTransform;
+    public void EnableUndoButton(bool status) => chestView.undoChestButton.gameObject.SetActive(status);   
+    public void SetChestStatusText(string text) => chestUIUpdater.SetChestStatusText(text);  
+    public bool GetUndoStatus() => chestData.undoPressed;
+    public void SetUndoStatus(bool status) => chestData.undoPressed = status;   
+    public TextMeshProUGUI GetUnlockAfterTimerText() => chestView.unlockAfterTimerText;
+    public TextMeshProUGUI GetStatusText() => chestView.chestStatusText;
     public ChestStates GetCurrentState() => chestData.currentChestState;
     public void SetCurrentChestState(ChestStates state) => chestData.currentChestState = state;
-    public bool GetUndoStatus() => chestData.undoPressed;
-    public void SetUndoStatus(bool status) => chestData.undoPressed = status;
-    public void SetStartTime() => chestData.startTime = Time.time;
-    public void SetChestStatusText(string text) => chestUIUpdater.SetChestStatusText(text);
     public void ShowChestData() => chestUIUpdater.ShowChestData();
-
+    public Button GetBuyonChestButton() => chestView.unlockAfterTimerButton;
     public void SetChest()
     {
         chestUIUpdater.SetChestImage();
@@ -46,20 +44,7 @@ public class ChestController
     {
         GameService.Instance.ChestEnablerScript.DisableLockedChests(GameService.Instance.ChestSlotService.GetChestViewList());
         chestStateMachine.ChangeState(chestStateMachine.unlockingState);
-    }
-    public void SetBuyButtonOnChest()
-     {
-         int openingCost = chestValueCalculator.GetOpeningWithGemCost(chestData.currentTimeInSeconds);
-         int playerGems = GameService.Instance.playerData.GetPlayerGems();
-         if (playerGems >= openingCost)
-         {
-             OnSuccesfullBuyWithGems(openingCost);                      
-         }
-         else 
-         {
-             GameService.Instance.PopUpService.DisplayPopUp("NOT ENOUGH GEMS");
-         }
-     }
+    }  
      public void OnSuccesfullBuyWithGems(int openingCost)
      {
          EnableUndoButton(true);
@@ -69,16 +54,8 @@ public class ChestController
      }
      public void InstantBuy()
      {
-         int openingCost = chestValueCalculator.GetInstantOpeningCost();      
-         if (GameService.Instance.playerData.GetPlayerGems() >= openingCost)
-         {
-             OnSuccesfullBuyWithGems(openingCost);
-         }
-         else
-         {
-             GameService.Instance.PopUpService.DisplayPopUp("NOT ENOUGH GEMS");
-         }
-
+        int openingCost = chestValueCalculator.GetInstantOpeningCost();
+        GameService.Instance.playerData.InstantBuy(openingCost, this);
      }
      public void UndoChestState()
      {
@@ -100,10 +77,7 @@ public class ChestController
      {
          int randomCoins = chestValueCalculator.GetRandomCoins();
          int randomGems = chestValueCalculator.GetRandomGems();
-         GameService.Instance.PopUpService.DisplayPopUp("+" + randomGems + " Gems" + " +" + randomCoins + " Coins");
-         GameService.Instance.playerData.AddCoins(randomCoins);
-         GameService.Instance.playerData.AddGems(randomGems);
-         GameService.Instance.UIService.SetPlayerUI();
+         GameService.Instance.UIService.UpdatePlayerData(randomCoins, randomGems);
      }
     public void DestroyChest()
     {

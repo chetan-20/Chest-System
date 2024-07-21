@@ -65,7 +65,7 @@ public class ChestSlotService : MonoBehaviour
     }
     public void UpdateSlot(ChestView chestView)
     {
-        MarkSlotEmpty(chestView.parentTransform);
+        MarkSlotEmpty(chestView.GetParentTransform());
         activeChestViews.Remove(chestView);
     }
 }

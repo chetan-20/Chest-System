@@ -60,7 +60,14 @@ public class UIService : MonoBehaviour
     {
         playerGemsText.text = GameService.Instance.playerData.GetPlayerGems().ToString();
         playerCoinText.text = GameService.Instance.playerData.GetPlayerCoins().ToString();
-    }   
+    }
+    public void UpdatePlayerData(int randomCoins,int randomGems)
+    {
+        GameService.Instance.PopUpService.DisplayPopUp("+" + randomGems + " Gems" + " +" + randomCoins + " Coins");
+        GameService.Instance.playerData.AddCoins(randomCoins);
+        GameService.Instance.playerData.AddGems(randomGems);
+        GameService.Instance.UIService.SetPlayerUI();
+    }
     public void SetInstantBuyWithGemsText(int cost) => buyWithGemsText.text = "Buy Now For " + cost;   
     private void InstantBuyButton() => currentChestView.ChestController.InstantBuy();
     public void SetGemsToGainText(string text) => gemsToGainText.text = text;
