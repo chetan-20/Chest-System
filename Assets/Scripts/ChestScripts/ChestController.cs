@@ -15,7 +15,7 @@ public class ChestController
         this.chestView = chestView;
         chestView.SetViewController(this);
         chestStateMachine = new ChestStateMachine(this);
-        chestValueCalculator = new ChestValueCalculator(this);      
+        chestValueCalculator = new ChestValueCalculator();      
         chestUIUpdater = new ChestUIUpdater(this.chestView,this);        
         SetChest();
         chestStateMachine.Initialize(chestStateMachine.lockedState);
@@ -35,6 +35,7 @@ public class ChestController
     public void SetCurrentChestState(ChestStates state) => chestData.currentChestState = state;
     public void ShowChestData() => chestUIUpdater.ShowChestData();
     public Button GetBuyonChestButton() => chestView.unlockAfterTimerButton;
+    public int GetOpeningCost() => chestValueCalculator.GetInstantOpeningCost(chestData.timerInMinutes);
     public void SetChest()
     {
         chestUIUpdater.SetChestImage();
@@ -53,15 +54,13 @@ public class ChestController
          chestStateMachine.ChangeState(chestStateMachine.unlockNotCollectedState);        
      }
      public void InstantBuy()
-     {
-        int openingCost = chestValueCalculator.GetInstantOpeningCost();
-        GameService.Instance.playerData.InstantBuy(openingCost, this);
+     {       
+        GameService.Instance.playerData.InstantBuy(GetOpeningCost(), this);
      }
      public void UndoChestState()
-     {
-         int openingCost = chestValueCalculator.GetInstantOpeningCost();
+     {        
          SetUndoStatus(true);
-         GameService.Instance.playerData.AddGems(openingCost);
+         GameService.Instance.playerData.AddGems(GetOpeningCost());
          GameService.Instance.UIService.SetPlayerUI();
          chestStateMachine.ChangeState(chestStateMachine.lockedState);
          EnableUndoButton(false);
@@ -75,8 +74,8 @@ public class ChestController
      }         
      public void UpdatePlayerCoinsAndGems()
      {
-         int randomCoins = chestValueCalculator.GetRandomCoins();
-         int randomGems = chestValueCalculator.GetRandomGems();
+         int randomCoins = chestValueCalculator.GetRandomCoins(chestData.coinsMinRange,chestData.coinsMaxRange);
+         int randomGems = chestValueCalculator.GetRandomGems(chestData.gemsMinRange,chestData.gemsMaxRange);
          GameService.Instance.UIService.UpdatePlayerData(randomCoins, randomGems);
      }
     public void DestroyChest()

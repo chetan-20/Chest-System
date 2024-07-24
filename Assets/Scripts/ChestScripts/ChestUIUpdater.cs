@@ -12,7 +12,7 @@ public class ChestUIUpdater
     private void SetGemsToGainText() => GameService.Instance.UIService.SetGemsToGainText(GetGemsRange());
     private void SetCoinsToGainText() => GameService.Instance.UIService.SetCoinsToGainText(GetCoinsRange());
     private void SetTimeLimitText() => GameService.Instance.UIService.SetTimeLimitText("Time To Open " + chestController.chestData.timerInMinutes + " Mins");
-    private void SetInstantBuyWithGemsText() => GameService.Instance.UIService.SetInstantBuyWithGemsText(chestController.chestValueCalculator.GetInstantOpeningCost());
+    private void SetInstantBuyWithGemsText() => GameService.Instance.UIService.SetInstantBuyWithGemsText(chestController.GetOpeningCost());
     private string GetGemsRange() => $"{chestController.chestData.gemsMinRange}-{chestController.chestData.gemsMaxRange}";
     private string GetCoinsRange() => $"{chestController.chestData.coinsMinRange}-{chestController.chestData.coinsMaxRange}";
     public void SetChestStatusText(string text) => chestView.chestStatusText.text = text;   

@@ -5,7 +5,7 @@ public class UnlockingState : IChestStates
     private ChestTimer chestTimer;
     public UnlockingState(ChestController chestController) : base(chestController) 
     { 
-        chestTimer = new ChestTimer(this.chestController);
+        chestTimer = new ChestTimer();
     } 
     public override void OnEnterState()
     {
@@ -17,7 +17,11 @@ public class UnlockingState : IChestStates
     }   
     public override void Update()
     {
-        chestTimer.StartTimer(chestController.GetStatusText(),chestController.GetUnlockAfterTimerText());       
+        chestTimer.StartTimer(chestController.GetStatusText(),chestController.GetUnlockAfterTimerText(),chestController.chestData.timerInMinutes);
+        if (chestTimer.currentTimeInSeconds <= 0)
+        {
+            chestController.SetCurrentChestState(ChestStates.UNLOCKED);
+        }
     } 
     public override void OnExitState()
     {

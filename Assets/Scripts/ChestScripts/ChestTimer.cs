@@ -2,27 +2,19 @@ using TMPro;
 using UnityEngine;
 public class ChestTimer 
 {
-    private ChestController chestController;    
+    //private ChestController chestController;    
     public float currentTimeInSeconds { get; private set; }
-    private float startTime;
-    public ChestTimer(ChestController chestController)
-    {
-        this.chestController = chestController;      
-    }    
-    public void StartTimer(TextMeshProUGUI chestStatusText,TextMeshProUGUI unlockOnChestText)
+    private float startTime;   
+    public void StartTimer(TextMeshProUGUI chestStatusText,TextMeshProUGUI unlockOnChestText,int timerInMinutes)
     {        
         float elapseTime = Time.time - startTime;
-        currentTimeInSeconds = chestController.chestData.timerInMinutes * 60;
+        currentTimeInSeconds = timerInMinutes * 60;
         if (currentTimeInSeconds > 0)
         {
            currentTimeInSeconds -= elapseTime;
             UpdateTimerText(chestStatusText);
             SetBuyButtonTextOnChest(currentTimeInSeconds,unlockOnChestText);
-        }
-        if (currentTimeInSeconds <= 0)
-        {
-            chestController.SetCurrentChestState(ChestStates.UNLOCKED);
-        }
+        }        
     }
     public void SetStartTime()
     {
@@ -44,5 +36,5 @@ public class ChestTimer
            text.text = minutes + " : " + seconds.ToString("00");
         }
     }
-    private void SetBuyButtonTextOnChest(float remainingTime,TextMeshProUGUI text) => text.text = "OPEN NOW " + new ChestValueCalculator(chestController).GetOpeningWithGemCost(remainingTime);
+    private void SetBuyButtonTextOnChest(float remainingTime,TextMeshProUGUI text) => text.text = "OPEN NOW " + new ChestValueCalculator().GetOpeningWithGemCost(remainingTime);
 }
