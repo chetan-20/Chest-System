@@ -3,14 +3,14 @@ using UnityEngine;
 using UnityEngine.UI;
 public class ChestView : MonoBehaviour
 {
-    [SerializeField] public ChestView chestViewPrefab;
-    [SerializeField] public TextMeshProUGUI chestTypeText;
-    [SerializeField] public Image chestImage;
-    [SerializeField] public TextMeshProUGUI chestStatusText;   
-    [SerializeField] public Button unlockAfterTimerButton;
-    [SerializeField] public TextMeshProUGUI unlockAfterTimerText;    
-    [SerializeField] public Button undoChestButton;
-    [SerializeField] public Button chestDetailButton;
+    [SerializeField] private ChestView chestViewPrefab;
+    public TextMeshProUGUI chestTypeText;
+    public Image chestImage;
+    public TextMeshProUGUI chestStatusText;   
+    public Button unlockAfterTimerButton;
+    public TextMeshProUGUI unlockAfterTimerText;    
+    public Button undoChestButton;
+    public Button chestDetailButton;
     private Transform parentTransform;
     private ChestController chestController;
     public ChestController ChestController {  get { return chestController; } }
